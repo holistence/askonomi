@@ -65,6 +65,8 @@ ol.bolumler li{break-inside:avoid;display:flex;gap:16px;padding:12px 0;border-bo
 .t b{display:block;font-family:Fraunces,serif;font-weight:500;font-size:19px;line-height:1.3}
 .t i{display:block;color:var(--soluk);font-size:17px}
 .yazar{display:grid;grid-template-columns:240px 1fr;gap:48px;align-items:start}
+.foto{background:linear-gradient(180deg,#e7dccb 0%,#d9c9b2 100%);border-bottom:4px solid var(--bordo);overflow:hidden;display:flex;align-items:flex-end;justify-content:center;aspect-ratio:4/5}
+.foto img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
 .yazar .monogram{aspect-ratio:1;background:var(--murekkep);color:var(--zemin);display:grid;place-items:center;font:600 72px Fraunces,serif;letter-spacing:.04em}
 .kunye{display:grid;grid-template-columns:repeat(2,1fr);gap:40px}
 dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 22px;font-size:18px}
@@ -108,7 +110,9 @@ ol.bolumler li.sonuk{opacity:.25}
 .nokta:before{content:"";position:absolute;left:4px;top:0;bottom:0;width:1px;background:var(--cizgi)}
 @media (max-width:860px){.test{grid-template-columns:1fr}.nokta{display:none}.kart{padding:24px}}
 
-@media (max-width:860px){nav{display:none}.hero,.felsefe,.yazar,.kunye,.ingilizce{grid-template-columns:1fr}.hero{padding-top:40px}.kapak{order:-1}.kapak img{width:240px}.alintilar{grid-template-columns:1fr 1fr}ol.bolumler{columns:1}.yazar .monogram{width:140px;font-size:44px}.ingilizce img{width:200px}}
+@media (max-width:860px){nav{display:none}.hero,.felsefe,.yazar,.kunye,.ingilizce{grid-template-columns:1fr}.hero{padding-top:40px}.kapak{order:-1}.kapak img{width:240px}.alintilar{grid-template-columns:1fr 1fr}ol.bolumler{columns:1}.foto{background:linear-gradient(180deg,#e7dccb 0%,#d9c9b2 100%);border-bottom:4px solid var(--bordo);overflow:hidden;display:flex;align-items:flex-end;justify-content:center;aspect-ratio:4/5}
+.foto img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.foto{width:200px}.ingilizce img{width:200px}}
 @media (max-width:520px){body{font-size:18px}.alintilar{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.cizim path.e{animation:none;stroke-dashoffset:0}.gor{opacity:1;transform:none}}
 </style>
@@ -183,7 +187,7 @@ ol.bolumler li.sonuk{opacity:.25}
 </div></section>
 
 <section id="yazar"><div class="wrap yazar gor">
- <div class="monogram">MŞ</div>
+ <div class="foto"><img src="img/yazar.webp" alt="Prof. Dr. Mehmet Şahin" width="480" height="600" loading="lazy"></div>
  <div><span class="etiket"><span lang="tr">Yazar</span><span lang="en">Author</span></span>
   <h2>Prof. Dr. Mehmet Şahin</h2>
   <p lang="tr">Ekonomist. Çanakkale Onsekiz Mart Üniversitesi’nde öğretim üyesi. Kamu maliyesi, bölgesel kalkınma ve refah politikaları üzerine çalışıyor. Aşkonomi’de iktisadın araçlarını insan hayatının en kişisel alanına, aşka ve ilişkilere çeviriyor; ama son sözü kalbe bırakıyor.</p>

@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://askonomi.com/">
 <meta property="og:type" content="book">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="favicon-48.png" sizes="48x48" type="image/png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="alternate" hreflang="tr" href="https://askonomi.com/">
 <link rel="alternate" hreflang="en" href="https://askonomi.com/?lang=en">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,8 @@ a{color:inherit}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 header{position:sticky;top:0;z-index:5;background:rgba(242,235,224,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--cizgi)}
 header .wrap{display:flex;align-items:center;gap:28px;height:64px}
-.logo{font-family:Fraunces,serif;font-weight:600;font-size:22px;letter-spacing:.06em;text-decoration:none}
+.logo img{width:36px;height:36px;border-radius:50%}
+.logo{display:inline-flex;align-items:center;gap:12px;font-family:Fraunces,serif;font-weight:600;font-size:22px;letter-spacing:.06em;text-decoration:none}
 nav{display:flex;gap:22px;margin-left:auto;font-size:17px}nav a{text-decoration:none;color:var(--soluk)}nav a:hover{color:var(--bordo)}
 .dil{border:1px solid var(--murekkep);background:none;font:600 13px/1 Fraunces,serif;letter-spacing:.12em;padding:8px 10px;cursor:pointer;color:var(--murekkep)}
 .dil:hover{background:var(--murekkep);color:var(--zemin)}
@@ -115,7 +116,7 @@ ol.bolumler li.sonuk{opacity:.25}
 <body>
 <div class="nokta" aria-hidden="true"><svg viewBox="0 0 24 24" id="noktaKalp"><path d="M12 21C4 15 2 10 5 7c2-2 5-1 7 2 2-3 5-4 7-2 3 3 1 8-7 14z"/></svg></div>
 <header><div class="wrap">
-<a class="logo" href="#"><span lang="tr">AŞKONOMİ</span><span lang="en">AŞKONOMİ</span></a>
+<a class="logo" href="#"><img src="img/simge.png" alt="" width="36" height="36"><span lang="tr">AŞKONOMİ</span><span lang="en">AŞKONOMİ</span></a>
 <nav><a href="#felsefe"><span lang="tr">Felsefe</span><span lang="en">Idea</span></a><a href="#test"><span lang="tr">Test</span><span lang="en">Quiz</span></a><a href="#icindekiler"><span lang="tr">İçindekiler</span><span lang="en">Contents</span></a><a href="#yazar"><span lang="tr">Yazar</span><span lang="en">Author</span></a><a href="#english"><span lang="tr">English Edition</span><span lang="en">Editions</span></a><a href="#takip"><span lang="tr">Takip Et</span><span lang="en">Follow</span></a></nav>
 <button class="dil" id="dil" aria-label="Dil / Language"><span lang="tr">EN</span><span lang="en">TR</span></button>
 </div></header>
@@ -236,7 +237,7 @@ ol.bolumler li.sonuk{opacity:.25}
 
 <footer><div class="wrap">
  <div class="hp"><img src="img/hp.png" alt="Holistence Publications"><span>Holistence Publications</span></div>
- <div>© 2026 Mehmet Şahin · askonomi.com</div>
+ <div style="display:flex;align-items:center;gap:12px"><img src="img/simge.png" alt="Aşkonomi" width="34" height="34" style="border-radius:50%">© 2026 Mehmet Şahin · askonomi.com</div>
 </div></footer>
 
 <script>

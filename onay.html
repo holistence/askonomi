@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aboneliğiniz onaylandı · Aşkonomi</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Crimson+Pro:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--zemin:#F2EBE0;--zemin2:#EAE1D3;--murekkep:#262028;--soluk:#6b6070;--bordo:#B3263A;--cizgi:#d8ccbb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--zemin);color:var(--murekkep);font:400 19px/1.6 "Crimson Pro",Georgia,serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--cizgi)}
+header .wrap{display:flex;align-items:center;gap:12px;height:64px}
+header a{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:inherit;font:600 21px/1 Fraunces,serif;letter-spacing:.06em}
+header img{width:34px;height:34px;border-radius:50%}
+main{padding:48px 0 64px}
+h1{font:600 clamp(32px,6vw,46px)/1.1 Fraunces,serif;margin:0 0 8px}
+.tarih{color:var(--soluk);margin:0 0 36px}
+h2{font:500 24px/1.25 Fraunces,serif;margin:38px 0 10px;color:var(--bordo)}
+a{color:var(--bordo)}
+ul{padding-left:22px}li{margin:4px 0}
+.kutu{background:var(--zemin2);padding:18px 20px;border-left:3px solid var(--bordo)}
+.en{margin-top:64px;padding-top:28px;border-top:1px solid var(--cizgi)}
+footer{border-top:1px solid var(--cizgi);padding:28px 0 40px;color:var(--soluk);font-size:16px}
+
+.ortala{text-align:center;padding:72px 0 80px}
+.kalp{width:72px;height:72px;margin:0 auto 22px;display:block}
+.kalp path{fill:none;stroke:var(--bordo);stroke-width:2.2;stroke-dasharray:120;stroke-dashoffset:120;animation:ciz 1.6s ease forwards}
+@keyframes ciz{to{stroke-dashoffset:0}}
+.ortala h1{margin-bottom:14px}
+.ortala p{max-width:540px;margin:0 auto 14px;color:var(--soluk)}
+.btn{display:inline-block;background:var(--murekkep);color:var(--zemin);text-decoration:none;padding:14px 22px;font:500 15px/1 Fraunces,serif;letter-spacing:.1em;text-transform:uppercase;margin:18px 6px 0}
+.btn.ikincil{background:none;color:var(--murekkep);border:1px solid var(--murekkep)}
+.btn:hover{background:var(--bordo);color:var(--zemin);border-color:var(--bordo)}
+html[lang=tr] .en-t{display:none}html[lang=en] .tr-t{display:none}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="./"><img src="img/simge.png" alt="">AŞKONOMİ</a></div></header>
+<main><div class="wrap ortala">
+<svg class="kalp" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 41S6 30 6 17.5C6 11.7 10.4 8 15.2 8c3.8 0 6.8 2.2 8.8 5.6C26 10.2 29 8 32.8 8 37.6 8 42 11.7 42 17.5 42 30 24 41 24 41z"/></svg>
+<div class="tr-t">
+<h1>Aboneliğiniz onaylandı</h1>
+<p>Artık Aşkonomi okurları listesindesiniz. Kitap çıktığı gün ilk siz haberdar olacaksınız; arada okuma notları ve yeni testler de gelecek.</p>
+<p>Gelecek e-postalarımızın spama düşmemesi için <b>merhaba@askonomi.com</b> adresini kişilerinize ekleyebilirsiniz.</p>
+<a class="btn" href="./#test">Aşk tarzını keşfet</a><a class="btn ikincil" href="./">Siteye dön</a>
+</div>
+<div class="en-t">
+<h1>Subscription confirmed</h1>
+<p>You are now on the Aşkonomi readers’ list. You’ll be the first to know when the book is out, with reading notes and new quizzes along the way.</p>
+<p>To keep our e-mails out of spam, add <b>merhaba@askonomi.com</b> to your contacts.</p>
+<a class="btn" href="./?lang=en#test">Take the quiz</a><a class="btn ikincil" href="./?lang=en">Back to the site</a>
+</div>
+</div></main>
+<footer><div class="wrap">Holistence Publications · <a href="./">askonomi.com</a> · <a href="kvkk.html">KVKK</a></div></footer>
+<script>(function(){var l;try{l=localStorage.getItem('dil')}catch(e){}if(!l)l=(navigator.language||'tr').slice(0,2)==='tr'?'tr':'en';document.documentElement.lang=l==='en'?'en':'tr'})()</script>
+</body>
+</html>

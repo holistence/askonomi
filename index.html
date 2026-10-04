@@ -87,6 +87,9 @@ dt{color:var(--soluk)}dd{margin:0}
 .btn{display:inline-block;background:var(--murekkep);color:var(--zemin);text-decoration:none;padding:14px 22px;font:500 15px/1 Fraunces,serif;letter-spacing:.1em;text-transform:uppercase;margin:8px 10px 0 0}
 .btn.ikincil{background:none;color:var(--murekkep);border:1px solid var(--murekkep)}
 .btn:hover{background:var(--bordo);color:var(--zemin);border-color:var(--bordo)}
+.sonuc-abone{margin-top:24px;padding:18px 20px;background:var(--zemin2);border-left:3px solid var(--bordo)}
+.sonuc-abone p{margin:0 0 12px;font-size:18px}
+.sonuc-abone .btn{margin:0}
 .abone{max-width:640px;margin:6px 0 10px}
 .abone-not{color:var(--soluk);margin:0 0 18px;font-size:19px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
@@ -341,6 +344,8 @@ ol.bolumler li.sonuk{opacity:.25}
  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('goster');io.unobserve(e.target)}})},{threshold:.12});
  document.querySelectorAll('.gor').forEach(function(el){io.observe(el)});
 
+
+ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('.abone-git');if(!a)return;e.preventDefault();var t=document.getElementById('takip');t.scrollIntoView({behavior:'smooth'});setTimeout(function(){var i=document.getElementById('ab-eposta');if(i)i.focus({preventScroll:true})},700)});
  // bölüm temaları
  var tema=['temel','temel','temel','temel','temel','piyasa','piyasa','piyasa','piyasa','piyasa','beden','beden','beden','beden','beden','kurum','kurum','kurum','kurum','kriz','kriz','kriz','kriz','kriz','kriz','kurum','piyasa','cag','kurum','kurum','cag','cag','cag','cag','cag','temel'];
  var lis=document.querySelectorAll('#bolumler li');lis.forEach(function(li,i){li.dataset.t=tema[i]||'temel'});
@@ -394,7 +399,7 @@ ol.bolumler li.sonuk{opacity:.25}
   var msg=l==='tr'?('Aşkonomi testine göre aşk hayatımı anlatan kavram: '+t[0]+'. Seninki ne? '+url):('According to the Aşkonomi quiz, the idea that explains my love life is: '+t[0]+'. What is yours? '+url);
   kart.innerHTML='<div class="ilerleme"><i style="width:100%"></i></div><div class="sonuc"><span class="bolumno">'+(l==='tr'?'Bölüm ':'Chapter ')+r.n+'</span><h3>'+t[0]+'</h3><p>'+t[1]+'</p></div>'+
   '<div class="paylas"><a target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(msg)+'">WhatsApp</a><a target="_blank" rel="noopener" href="https://x.com/intent/tweet?via=askonomikitap&text='+encodeURIComponent(msg)+'">X</a><a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url)+'">Facebook</a><button id="kopya">'+(l==='tr'?'Bağlantıyı kopyala':'Copy link')+'</button></div>'+
-  '<p style="margin-top:22px">'+(l==='tr'?'Kitap çıktığında ilk siz okuyun: ':'Be the first to read it: ')+'<a href="#takip">'+(l==='tr'?'haberdar ol':'get notified')+'</a></p><button class="btn baska" style="margin-top:18px">'+(l==='tr'?'Başka bir test çöz':'Try another quiz')+'</button><br><button class="yeniden">'+(l==='tr'?'Bu testi yeniden çöz':'Retake this quiz')+'</button>';
+  '<div class="sonuc-abone"><p>'+(l==='tr'?'Bu sonuç, kitabın yalnızca bir bölümüne açılan kapı. Diğer tarzların hangi bölümlere uzandığını, okuma notlarını ve yeni testleri e-postayla al; kitap çıktığı gün ilk sen haberdar ol.':'This result opens just one chapter of the book. Get reading notes, new quizzes and launch-day news by e-mail.')+'</p><a class="btn abone-git" href="#takip">'+(l==='tr'?'Abone ol, ilk sen öğren':'Subscribe for more')+'</a></div><button class="btn ikincil baska" style="margin-top:18px">'+(l==='tr'?'Başka bir test çöz':'Try another quiz')+'</button><br><button class="yeniden">'+(l==='tr'?'Bu testi yeniden çöz':'Retake this quiz')+'</button>';
   kart.querySelector('.yeniden').onclick=function(){i=0;puan={};ciz()};
   kart.querySelector('.baska').onclick=function(){testSec((tv+1)%TESTLER.length);Q=TESTLER[tv].q;i=0;puan={};ciz()};
   kart.querySelector('#kopya').onclick=function(e){try{navigator.clipboard.writeText(msg);e.target.textContent=l==='tr'?'Kopyalandı':'Copied'}catch(x){}};

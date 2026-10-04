@@ -151,6 +151,8 @@ ol.bolumler li.sonuk{opacity:.25}
 @media (max-width:520px){body{font-size:18px}.alintilar{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.cizim path.e{animation:none;stroke-dashoffset:0}.gor{opacity:1;transform:none}}
 </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="e2b973cb-62c0-4a6a-b9de-1fd1de7402e8"></script>
+<script>function iz(n,d){try{if(window.umami)umami.track(n,d)}catch(e){}}</script>
 </head>
 <body>
 <div class="nokta" aria-hidden="true"><svg viewBox="0 0 24 24" id="noktaKalp"><path d="M12 21C4 15 2 10 5 7c2-2 5-1 7 2 2-3 5-4 7-2 3 3 1 8-7 14z"/></svg></div>
@@ -345,6 +347,7 @@ ol.bolumler li.sonuk{opacity:.25}
  document.querySelectorAll('.gor').forEach(function(el){io.observe(el)});
 
 
+ document.addEventListener('click',function(e){if(!e.target.closest)return;var p=e.target.closest('.paylas a, .paylas button');if(p)iz('sonuc-paylas',{kanal:p.textContent.trim()});var so=e.target.closest('.sosyal a');if(so)iz('sosyal-tik',{hesap:so.textContent.trim().split(' ')[0]});if(e.target.closest('.abone-git'))iz('abone-cagrisi');if(e.target.closest('.ml-form-embedSubmit .primary'))iz('form-gonder-tik')});
  document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('.abone-git');if(!a)return;e.preventDefault();var t=document.getElementById('takip');t.scrollIntoView({behavior:'smooth'});setTimeout(function(){var i=document.getElementById('ab-eposta');if(i)i.focus({preventScroll:true})},700)});
  // bölüm temaları
  var tema=['temel','temel','temel','temel','temel','piyasa','piyasa','piyasa','piyasa','piyasa','beden','beden','beden','beden','beden','kurum','kurum','kurum','kurum','kriz','kriz','kriz','kriz','kriz','kriz','kurum','piyasa','cag','kurum','kurum','cag','cag','cag','cag','cag','temel'];
@@ -390,12 +393,12 @@ ol.bolumler li.sonuk{opacity:.25}
   G:{n:'24',tr:['Güven sermayesi','Senin aşk anlayışının merkezinde zamanla biriken bir varlık var: güven. Yavaş kurulur, hızlı harcanır, ama en değerli birikimdir. Yirmi dördüncü bölüm: İlişkilerin görünmeyen varlığı.'],en:['Trust capital','At the heart of your idea of love is an asset that builds over time: trust. Slow to earn, quick to spend, yet the most valuable savings of all. Chapter 24: The invisible asset of relationships.']},
   B:{n:'27',tr:['Seçenek bolluğu','Önünde hiç olmadığı kadar çok seçenek var; ama daha fazla seçim her zaman daha iyi aşk anlamına gelmiyor. Yirmi yedinci bölüm, kaydırdıkça neden daha zor karar verdiğimizi anlatıyor.'],en:['The abundance of choice','You have more options than ever — but more choice does not always mean better love. Chapter 27 explains why the more we swipe, the harder it gets to decide.']},
   E:{n:'28',tr:['Beklenti enflasyonu','Partnerinden hem en iyi arkadaş, hem tutkulu sevgili, hem de hayat koçu olmasını bekliyorsun. Beklentiler yükseldikçe aynı ilişki daha az tatmin edici görünebilir. Yirmi sekizinci bölüm: Bir partnerden her şeyi beklemek.'],en:['Expectation inflation','You want your partner to be best friend, passionate lover and life coach at once. As expectations rise, the same relationship can feel less satisfying. Chapter 28: Expecting everything from one partner.']}};
- var kart=document.getElementById('kart'),i=0,puan={};
+ var kart=document.getElementById('kart'),i=0,puan={},bitti=0;
  function L(){return h.getAttribute('data-lang')}
  function ciz(){var l=L(),ix=l==='tr'?1:2;
   if(i<Q.length){var q=Q[i];kart.innerHTML='<div class="testad">'+TESTLER[tv].ad[l]+'</div><div class="ilerleme"><i style="width:'+(i/Q.length*100)+'%"></i></div><p class="soru">'+(i+1)+'. '+q[l]+'</p>'+q.a.map(function(a){return '<button class="secenek" data-k="'+a[0]+'">'+a[ix]+'</button>'}).join('');
-   kart.querySelectorAll('.secenek').forEach(function(b){b.onclick=function(){puan[b.dataset.k]=(puan[b.dataset.k]||0)+1;i++;ciz()}});return}
-  var ks=Object.keys(puan),mx=Math.max.apply(null,ks.map(function(k){return puan[k]})),en=ks.filter(function(k){return puan[k]===mx}),best=en[Math.floor(Math.random()*en.length)],r=R[best],t=r[l],url='https://askonomi.com/'+(l==='en'?'?lang=en':'');
+   kart.querySelectorAll('.secenek').forEach(function(b){b.onclick=function(){if(i===0)iz('test-basladi',{test:tv+1});puan[b.dataset.k]=(puan[b.dataset.k]||0)+1;i++;bitti=0;ciz()}});return}
+  var ks=Object.keys(puan),mx=Math.max.apply(null,ks.map(function(k){return puan[k]})),en=ks.filter(function(k){return puan[k]===mx}),best=en[Math.floor(Math.random()*en.length)],r=R[best],t=r[l],_=bitti||(bitti=1,iz('test-bitti',{test:tv+1,sonuc:r.tr[0]})),url='https://askonomi.com/'+(l==='en'?'?lang=en':'');
   var msg=l==='tr'?('Aşkonomi testine göre aşk hayatımı anlatan kavram: '+t[0]+'. Seninki ne? '+url):('According to the Aşkonomi quiz, the idea that explains my love life is: '+t[0]+'. What is yours? '+url);
   kart.innerHTML='<div class="ilerleme"><i style="width:100%"></i></div><div class="sonuc"><span class="bolumno">'+(l==='tr'?'Bölüm ':'Chapter ')+r.n+'</span><h3>'+t[0]+'</h3><p>'+t[1]+'</p></div>'+
   '<div class="paylas"><a target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(msg)+'">WhatsApp</a><a target="_blank" rel="noopener" href="https://x.com/intent/tweet?via=askonomikitap&text='+encodeURIComponent(msg)+'">X</a><a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url)+'">Facebook</a><button id="kopya">'+(l==='tr'?'Bağlantıyı kopyala':'Copy link')+'</button></div>'+
@@ -410,7 +413,7 @@ ol.bolumler li.sonuk{opacity:.25}
 })();
 </script>
 <script>
-function ml_webform_success_46693605(){var $=window.ml_jQuery||window.jQuery;$('.ml-subscribe-form-46693605 .row-success').show();$('.ml-subscribe-form-46693605 .row-form').hide()}
+function ml_webform_success_46693605(){iz('abone-formu');var $=window.ml_jQuery||window.jQuery;$('.ml-subscribe-form-46693605 .row-success').show();$('.ml-subscribe-form-46693605 .row-form').hide()}
 </script>
 <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519"></script>
 <script>fetch("https://assets.mailerlite.com/jsonp/2682185/forms/200375210165142584/takel")</script>

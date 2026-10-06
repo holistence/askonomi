@@ -93,6 +93,7 @@
     }
     if (t.tur === 'mit') return mitTest(t, kok);
     if (t.tur === 'cift') return ciftTest(t, kok);
+    if (t.tur === 'hesap') return hesapTest(t, kok);
     return profilTest(t, kok);
   }
 
@@ -152,6 +153,31 @@
     ciz();
   }
 
+  // ---- hesaplayıcı: puanlar toplanır, 0–100 endekse çevrilir ----
+  function hesapTest(t, kok) {
+    var i = 0, top = 0, mx = 0;
+    function ciz() {
+      if (i < t.sorular.length) {
+        var q = t.sorular[i];
+        kok.innerHTML = '<div class="kart">' + ilerleme(i, t.sorular.length) + '<p class="soru">' + esc(q[0]) + '</p>' +
+          q[1].map(function (a) { return '<button class="secenek" data-p="' + a[0] + '">' + esc(a[1]) + '</button>'; }).join('') + '</div>';
+        kok.querySelectorAll('.secenek').forEach(function (b) {
+          b.onclick = function () {
+            if (i === 0) iz('test-basladi', { test: t.slug });
+            top += +b.dataset.p; mx += Math.max.apply(null, q[1].map(function (a) { return a[0]; })); i++; ciz(); scrollUst();
+          };
+        });
+        return;
+      }
+      var e = mx ? Math.round(top / mx * 100) : 0, sv = 0;
+      t.seviyeler.forEach(function (s, j) { if (e >= s[0]) sv = j; });
+      var s = t.seviyeler[sv];
+      kaydet(t.slug, 's' + sv, s[1] + ' · ' + e + '/100'); iz('test-bitti', { test: t.slug, sonuc: s[1], puan: e });
+      sonucCiz(kok, t, 's' + sv, s[1], s[2], t.bolum, function () { i = 0; top = 0; mx = 0; ciz(); }, (t.birim || 'Endeks') + ': ' + e + ' / 100');
+    }
+    ciz();
+  }
+
   // ---- çift testi: cevaplar bağlantıda taşınır, sunucuya gitmez ----
   function ciftTest(t, kok) {
     var p = new URLSearchParams(location.search), a = p.get('a'), b = p.get('b'), an = p.get('an') || '', bn = p.get('bn') || '';
@@ -161,7 +187,7 @@
     function ciz() {
       if (i < 0) {
         kok.innerHTML = '<div class="kart">' + (davet ? '<div class="davet"><b>' + esc(an || 'Partnerin') + '</b> bu testi çözdü ve seni davet etti. Şimdi sen çöz; sonunda ikinizin cevaplarını yan yana göreceksiniz.</div>' :
-          '<p>On kısa soru. Önce sen çöz, sonra bağlantıyı partnerine gönder. O da çözünce ikinizin “fiyat listesi” yan yana çıkacak.</p>') +
+          '<p>On kısa soru. Önce sen çöz, sonra bağlantıyı partnerine gönder. O da çözünce ikinizin cevapları yan yana çıkacak.</p>') +
           '<label for="ad" class="sayi">Adın (isteğe bağlı)</label><input id="ad" class="ad" maxlength="20" autocomplete="given-name" placeholder="Örneğin: Deniz"><button class="btn" id="basla">Başla</button></div>';
         $('#basla').onclick = function () { ad = $('#ad').value.trim().slice(0, 20); i = 0; iz('test-basladi', { test: t.slug, davet: davet ? 1 : 0 }); ciz(); };
         return;
@@ -175,7 +201,7 @@
       }
       if (davet) return ciftSonuc(t, kok, a, cevap, an, ad, true);
       var link = SITE + testUrl(t) + '?a=' + cevap + (ad ? '&an=' + encodeURIComponent(ad) : '');
-      var msg = 'Aşkonomi çift testini çözdüm. Bakalım birbirimizi ne kadar doğru “fiyatlıyoruz”? Sen de çöz: ' + link;
+      var msg = 'Aşkonomi çift testini çözdüm: “' + t.ad + '” Sen de çöz, sonuçlarımızı yan yana görelim: ' + link;
       kaydet(t.slug, 'bekliyor', 'Partnerini bekliyor');
       kok.innerHTML = '<div class="kart sonuc"><span class="bolumno">Yarısı tamam</span><h2>Şimdi sıra partnerinde</h2>' +
         '<p>Bu bağlantıyı yalnızca partnerine gönder. O çözünce ikinizin cevapları yan yana çıkacak ve uyum puanınız hesaplanacak.</p>' +

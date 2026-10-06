@@ -22,7 +22,7 @@ def js_veri():
     tl = []
     for t in TESTLER:
         d = {k: t[k] for k in ("no", "slug", "ad", "tur", "bolum", "sezon", "acilis")}
-        for k in ("kanca", "sorular", "sonuclar", "seviyeler"):
+        for k in ("kanca", "sorular", "sonuclar", "seviyeler", "birim"):
             if k in t: d[k] = t[k]
         if t["tur"] == "mit": d["bolum"] = t.get("bolum", t["bolum"])
         tl.append(d)

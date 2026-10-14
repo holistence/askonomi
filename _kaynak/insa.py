@@ -57,7 +57,7 @@ def sayfa(baslik, aciklama, url, gorsel, govde, sayfa_tur, slug="", aktif=""):
 <body data-sayfa="{sayfa_tur}" data-slug="{slug}">
 <header><div class="wrap"><a class="logo" href="/"><img src="/img/simge.png" alt="">AŞKONOMİ</a><nav><a href="/testler/"{' class="aktif"' if aktif=='testler' else ''}>Testler</a><a href="/#takip">Takip et</a></nav></div></header>
 <main>{govde}</main>
-<footer><div class="wrap"><span>© 2026 Mehmet Şahin · askonomi.com</span><span>Testler eğlence ve düşünme amaçlıdır; psikolojik tanı aracı değildir. <a href="/kvkk.html">KVKK</a></span></div></footer>
+<footer><div class="wrap"><span>© 2026 Prof. Dr. Mehmet Şahin · askonomi.com</span><span>Testler eğlence ve düşünme amaçlıdır; psikolojik tanı aracı değildir. <a href="/kvkk.html">KVKK</a></span></div></footer>
 <script src="/testler/veri.js?v={SURUM}"></script>
 <script src="/testler/motor.js?v={SURUM}"></script>
 </body></html>

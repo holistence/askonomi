@@ -35,11 +35,19 @@
       '<g fill="#B3263A" opacity=".85"><circle cx="41.5" cy="104.4" r="9"/><circle cx="93.5" cy="132.5" r="8.5"/><circle cx="30.7" cy="71.8" r="7"/><circle cx="125" cy="76" r="6.5"/><circle cx="175.8" cy="49.8" r="5.5"/><circle cx="119.5" cy="114.6" r="5"/></g>' +
       '<g fill="#1E6B70" opacity=".85"><circle cx="191.1" cy="129.4" r="3.5"/><circle cx="278.8" cy="102.9" r="2.5"/><circle cx="284" cy="120" r="2"/><circle cx="225.3" cy="55.4" r="3.5"/></g>' +
       '<path d="M30.7 66c-9-6-13-10-13-15c0-4 3-7 7-7c3 0 5 2 6 4c1-2 3-4 6-4c4 0 7 3 7 7c0 5-4 9-13 15z" transform="translate(0 -12)" fill="#B3263A"/><path d="M30.7 54v17" stroke="#B3263A" stroke-width="2.5"/></svg>',
+    hikaye: '<svg viewBox="0 0 320 180" aria-hidden="true"><g stroke="#262028" stroke-width="1.5" stroke-linejoin="round">' +
+      '<rect x="22" y="40" width="80" height="54" fill="#f3dde0"/><rect x="120" y="40" width="80" height="54" fill="#e2a5ad"/><rect x="218" y="40" width="80" height="54" fill="#a3283c"/></g>' +
+      '<g fill="none" stroke="#fffaf2" stroke-width="2" opacity=".8"><path d="M30 70q20-14 40-4t26-6M128 70q20-14 40-4t26-6M226 70q20-14 40-4t26-6"/></g>' +
+      '<path d="M22 130H290" stroke="#b9ad9c" stroke-width="2"/><path d="M282 124l10 6l-10 6" fill="none" stroke="#b9ad9c" stroke-width="2"/>' +
+      '<g fill="#B3263A"><circle cx="62" cy="130" r="5"/><circle cx="160" cy="130" r="5"/><circle cx="258" cy="130" r="7"/></g>' +
+      '<g font-family="Fraunces,Georgia,serif" font-size="14" fill="#6b6070" text-anchor="middle"><text x="62" y="154">2008</text><text x="160" y="154">2016</text><text x="258" y="154">2025</text></g>' +
+      '<path d="M150 20l16 0" stroke="#B3263A" stroke-width="3"/><path d="M143 13l0 14l11-7z" fill="#B3263A" transform="translate(-8 0)"/></svg>',
     grafik: '<svg viewBox="0 0 320 180" aria-hidden="true"><path d="M40 20v134h250" fill="none" stroke="#b9ad9c" stroke-width="2"/>' +
       '<path d="M52 140l22 2l20-14l18 4l22-12l20 2l22-8l18 0l14-4c-30-26-52-40-52-62c0-14 11-24 24-24c10 0 18 6 22 14c4-8 12-14 22-14c13 0 24 10 24 24c0 22-22 36-52 62l14 8l16-10l14 8l16-10l14 12l10-28l14 10l14-50" fill="none" stroke="#B3263A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg>'
   };
 
   var OYUNLAR = [
+    { slug: 'hikaye', ad: 'Türkiye’nin aile hikâyesi', kisa: 'Altı sahnelik, kendiliğinden akan bir harita: 2008’den 2025’e haneler, evlilik, boşanma, çocuk ve yaşlanma.', sure: '1,5 dk', bolum: 'TÜİK verisiyle', cizim: 'hikaye' },
     { slug: 'guven', ad: 'Güven oyunu', kisa: 'Bir partnerle on tur. Yatırdığın her jeton üçe katlanır, peki geri gelir mi?', sure: '3 dk', bolum: 'Bölüm 24 · Güven Sermayesi', cizim: 'guven' },
     { slug: 'eslesme', ad: 'Eşleşme köyü', kisa: 'Sekiz kişilik bir köyü eşleştir. Kimin teklif ettiği, kimin kiminle kalacağını nasıl değiştiriyor?', sure: '4 dk', bolum: 'Bölüm 05 · Aşk Piyasası', cizim: 'eslesme' },
     { slug: 'beklenti', ad: 'Beklenti bütçesi', kisa: 'Önce hayalindeki partnerden ne beklediğini işaretle, sonra bir insanın gerçek kapasitesiyle karşılaştır.', sure: '2 dk', bolum: 'Bölüm 28 · Beklenti Enflasyonu', cizim: 'beklenti' },
@@ -77,7 +85,7 @@
       while (x.measureText(b).width > 940 && fs > 48) { fs -= 4; x.font = '600 ' + fs + 'px Fraunces, Georgia, serif'; }
       x.fillStyle = R.murekkep; x.fillText(b, 540, 1090);
       if (o.alt) { x.font = '400 40px "Crimson Pro", Georgia, serif'; x.fillStyle = R.murekkep; x.fillText(o.alt, 540, 1160); }
-      x.fillStyle = R.bordo; x.font = '500 36px Fraunces, Georgia, serif'; x.fillText('Seninki ne?  askonomi.com/oyunlar', 540, 1262);
+      x.fillStyle = R.bordo; x.font = '500 36px Fraunces, Georgia, serif'; x.fillText(o.cagri || 'Seninki ne?  askonomi.com/oyunlar', 540, 1262);
       c.toBlob(cb, 'image/png');
     });
   }
@@ -127,7 +135,7 @@
 
   // merkez sayfa
   var liste = document.getElementById('oyListe');
-  if (liste) liste.innerHTML = OYUNLAR.map(function (o, i) { return kartHTML(o, i === 0, i === OYUNLAR.length - 1); }).join('');
+  if (liste) liste.innerHTML = OYUNLAR.map(function (o) { return kartHTML(o, o.slug === 'hikaye' || o.slug === 'harita'); }).join('');
   var dg = document.getElementById('oyDiger');
   if (dg) dg.outerHTML = digerleri(dg.dataset.slug, 3);
 })();

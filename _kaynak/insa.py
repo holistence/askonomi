@@ -207,7 +207,7 @@ OYUN_SAYFA = [
     ("eslesme", "/oyunlar/eslesme/", "Eşleşme köyü · Aşkonomi", "Sekiz kişilik bir köyü Nobel ödüllü algoritmayla eşleştir. Kimin teklif ettiği sonucu nasıl değiştiriyor?"),
     ("beklenti", "/oyunlar/beklenti/", "Beklenti bütçesi · Aşkonomi", "Hayalindeki partnerden ne bekliyorsun? Bir insanın gerçek kapasitesiyle karşılaştır, beklenti enflasyonunu gör."),
     ("kaydirma", "/oyunlar/kaydirma/", "Kaydırma simülatörü · Aşkonomi", "Otuz profil kaydır, dikkatinin nasıl eridiğini kendi verinle gör."),
-    ("harita", "/oyunlar/harita/", "Türkiye’nin aşk haritası · Aşkonomi", "Bin kişide kaç evlilik, kaç boşanma, kadın başına kaç çocuk? TÜİK 2025 verisiyle il il harita."),
+    ("harita", "/oyunlar/harita/", "Türkiye’nin aşk haritası · Aşkonomi", "81 ilde evlilik, boşanma, ilk evlenme yaşı ve çocuk sayısı. TÜİK verisiyle 2014’ten 2025’e il il, yıl yıl."),
 ]
 
 def oyun_sayfalari():

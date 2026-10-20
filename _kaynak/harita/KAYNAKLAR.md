@@ -1,5 +1,25 @@
 # Türkiye'nin Aşk Haritası — Veri ve Geometri Kaynakları
 
+> **Güncelleme (21.10.2026): Harita artık TÜİK'in birincil il tablolarını kullanıyor.** Veri `tuik_isle.py` ile `_kaynak/harita/tuik/` klasöründeki TÜİK tablolarından üretilir. Aşağıdaki "il_verisi.csv" bölümündeki ikincil kaynak değerleri artık haritada kullanılmıyor; yalnızca il adı ve plaka listesi için tutuluyor.
+>
+> | Gösterge | Yıllar | Kaynak (birincil) |
+> |---|---|---|
+> | Kaba evlenme hızı | 2014–2025 | TÜİK "İl ve İlçe Evlenme Sayısı" ÷ yıl ortası il nüfusu (TÜİK ADNKS, araştırma arşivi v1) |
+> | Kaba boşanma hızı | 2014–2025 | TÜİK "İl ve İlçe Boşanma Sayısı" ÷ yıl ortası il nüfusu |
+> | Boşanma / evlenme | 2014–2025 | aynı iki tablodan |
+> | Ortalama ilk evlenme yaşı (K/E) | 2014–2025 | TÜİK "İl ve cinsiyete göre ortalama ilk evlenme yaşı" (2010–2025) |
+> | Kadının daha büyük olduğu evlilikler (%) | 2025 | TÜİK "İl ve Eşlerin Yaş Farkına Göre Evlilikler" |
+> | 2 aydan kısa süren boşanma davaları (%) | 2025 | TÜİK "İl ve Dava Süresine Göre Boşanmalar" |
+> | Toplam doğurganlık hızı | 2025 | ikincil kaynak (bkz. dogum_verisi.csv); arşivdeki 2018–2022 serisiyle tutarlı |
+> | Ortalama hanehalkı büyüklüğü | 2025 | TÜİK ADNKS (araştırma arşivi v1) |
+>
+> **Yöntem doğrulaması:** Yıl ortası nüfusla (iki yıl sonu nüfusunun ortalaması) hesaplanan kaba boşanma hızları, TÜİK'in yayımladığı "İllere Göre Kaba Boşanma Hızı" tablosunu 2014–2022 arasında 729 il-yılda ortalama 0,002 mutlak farkla tekrar ediyor (en büyük fark 0,05). Türkiye 2025: evlenme ‰6,43, boşanma ‰2,26, toplam evlenme 552.237, boşanma 193.793 — TÜİK bülteniyle aynı.
+>
+> **Kullanılmayan tablo:** "İl ve Yaş Grubuna Göre İlk Evlilikler" (2025). Erkek ve kadın yaş dağılımları neredeyse aynı (16–19: 5.460 erkek, 5.287 kadın; toplam 453.845 ve 438.111), aynı yıl için ilk evlenme yaşındaki 2,5 yıllık cinsiyet farkıyla bağdaşmıyor. Tablonun indirme ya da etiketleme hatası olabilir; TÜİK'ten teyit edilmeden kullanılmamalı.
+>
+> **Kullanılmayan diğerleri:** Yaşam süresi, il doğum sayıları 2015–2022, il ve yaş grubuna göre evlenenler 2022, İstanbul'a özgü önceki medeni durum tablosu — haritanın konusuna doğrudan girmediği ya da tek ille sınırlı olduğu için.
+
+
 Derleme tarihi: 21.10.2026
 
 ## Önemli not: TÜİK sitesine doğrudan erişilemedi

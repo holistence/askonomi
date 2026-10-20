@@ -272,3 +272,50 @@
 .es-ilk{font:italic 400 17px "Crimson Pro",serif;fill:var(--bordo)}
 .es-sahne.dar .es-ilk{font-size:19px}
 .es-tablo td:first-of-type{font-weight:600;color:var(--bordo)}
+
+/* ---------- Harita v2: göstergeler, zaman ---------- */
+.hr-gos{display:grid;grid-template-columns:1fr;gap:8px 18px;margin-bottom:10px}
+@media(min-width:760px){.hr-gos{grid-template-columns:auto auto auto;justify-content:start}}
+.hr-grup small{display:block;font:500 13px Fraunces,serif;color:var(--soluk);margin-bottom:4px}
+.hr-grup>div{display:flex;flex-wrap:wrap;gap:5px}
+.hr-gos button{font:500 15px/1 Fraunces,serif;padding:10px 12px;border:1px solid var(--cizgi);background:var(--zemin);cursor:pointer;color:var(--murekkep);white-space:nowrap}
+.hr-gos button em{font-style:normal;font-size:11px;color:var(--soluk);margin-left:3px;vertical-align:1px}
+.hr-gos button.secili{background:var(--murekkep);border-color:var(--murekkep);color:var(--zemin)}.hr-gos button.secili em{color:#cfc4b6}
+.hr-gos button:hover{border-color:var(--murekkep)}
+.hr-ara-satir{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:4px 0 10px}
+.hr-ara-satir .hr-ara{max-width:none;flex:1 1 220px}
+.hr-cins{display:flex;align-items:center;gap:4px}.hr-cins[hidden]{display:none}
+.hr-cins span{font-size:15px;color:var(--soluk);margin-right:4px}
+.hr-cins button{font:500 15px/1 Fraunces,serif;padding:10px 12px;border:1px solid var(--cizgi);background:var(--zemin);cursor:pointer;color:var(--murekkep)}
+.hr-cins button.secili{background:var(--bordo);border-color:var(--bordo);color:#fff}
+.hr-cerceve{position:relative}
+.hr-yil-buyuk{position:absolute;right:2%;bottom:4%;font:600 clamp(40px,9vw,92px)/1 Fraunces,serif;color:var(--murekkep);opacity:.12;pointer-events:none;letter-spacing:-.02em}
+.hr-zaman{display:flex;align-items:center;gap:12px;margin:6px 0 4px}
+.hr-zaman.kapali{opacity:.35}
+.hr-oynat{flex:none;width:46px;height:46px;border-radius:50%;border:0;background:var(--bordo);cursor:pointer;display:grid;place-items:center}
+.hr-oynat svg{width:20px;height:20px;fill:#fff}.hr-oynat.oynuyor{background:var(--murekkep)}.hr-oynat[disabled]{cursor:not-allowed}
+.hr-kaydir{flex:1;min-width:0}
+.hr-kaydir input{width:100%;accent-color:var(--bordo);height:28px;margin:0;cursor:pointer}
+.hr-yillar{display:flex;justify-content:space-between;font-size:13px;color:var(--soluk);padding:0 6px}
+@media(max-width:560px){.hr-yillar .ara{display:none}}
+@media(max-width:400px){.hr-yillar span:not(:first-child):not(:last-child){display:none}}
+.hr-buyuk{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:-4px 0 4px}
+.hr-buyuk b{font:600 clamp(32px,6vw,42px)/1 Fraunces,serif;color:var(--murekkep)}
+.hr-buyuk span{font-size:16px;color:var(--soluk)}
+.hr-deg{margin:0 0 6px;font-size:17px}.hr-deg b{font-family:Fraunces,serif}.hr-deg span{color:var(--soluk)}
+.hr-sp-kap{margin:6px 0 10px;padding:8px 10px 4px;background:#fffaf2;border:1px solid #e8dfd1}
+.hr-sp-kap small{font:500 13px Fraunces,serif;color:var(--soluk)}
+.hr-spark{display:block;width:100%;height:auto}
+.hr-sp-e{font:400 12px "Crimson Pro",serif;fill:var(--soluk)}.hr-sp-d{font:600 13px Fraunces,serif;fill:var(--murekkep)}
+.hr-sp-l{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--soluk);margin:0}
+.hr-sp-l i{display:inline-block;width:16px;height:3px}.hr-sp-l i.kesik{background:repeating-linear-gradient(90deg,#b9ad9c 0 4px,transparent 4px 8px);margin-left:8px}
+.hr-yil-not{display:block;font-size:13px;color:var(--soluk);margin-bottom:-2px}
+.hr-c{grid-template-columns:104px minmax(0,1fr) 56px 46px}
+@media(max-width:420px){.hr-c{grid-template-columns:86px minmax(0,1fr) 46px 40px}}
+.hr-uclar{grid-template-columns:1fr 1fr}
+.hr-degisim{margin-top:6px}.hr-degisim small{color:var(--petrol)!important}
+
+.hr-alt>*,.hr-uclar>*{min-width:0}
+.hr-uclar li button{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+@media(max-width:400px){.hr-kart{padding:14px 12px}}
+.hr-uclar{align-content:start}

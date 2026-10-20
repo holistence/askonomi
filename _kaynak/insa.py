@@ -55,7 +55,7 @@ def sayfa(baslik, aciklama, url, gorsel, govde, sayfa_tur, slug="", aktif=""):
 <script defer src="https://cloud.umami.is/script.js" data-website-id="e2b973cb-62c0-4a6a-b9de-1fd1de7402e8"></script>
 </head>
 <body data-sayfa="{sayfa_tur}" data-slug="{slug}">
-<header><div class="wrap"><a class="logo" href="/"><img src="/img/simge.png" alt="">AŞKONOMİ</a><nav><a href="/testler/"{' class="aktif"' if aktif=='testler' else ''}>Testler</a><a href="/kimya/"{' class="aktif"' if aktif=='kimya' else ''}>Kimya</a><a href="/grafik/"{' class="aktif"' if aktif=='grafik' else ''}>Grafik</a><a href="/#takip">Takip et</a></nav></div></header>
+<header><div class="wrap"><a class="logo" href="/"><img src="/img/simge.png" alt="">AŞKONOMİ</a><nav><a href="/testler/"{' class="aktif"' if aktif=='testler' else ''}>Testler</a><a href="/kimya/"{' class="aktif"' if aktif=='kimya' else ''}>Kimya</a><a href="/oyunlar/"{' class="aktif"' if aktif in ('oyunlar','grafik') else ''}>Oyunlar</a><a href="/#takip">Takip et</a></nav></div></header>
 <main>{govde}</main>
 <footer><div class="wrap"><span>© 2026 Prof. Dr. Mehmet Şahin · askonomi.com</span><span>Testler eğlence ve düşünme amaçlıdır; psikolojik tanı aracı değildir. <a href="/kvkk.html">KVKK</a></span></div></footer>
 <script src="/testler/veri.js?v={SURUM}"></script>
@@ -68,7 +68,7 @@ def merkez_sayfa():
     govde = """<div class="wrap"><div class="ust-alan"><span class="etiket">Aşkonomi Test Serisi</span>
 <h1>40 test.<br><em>4 sezon.</em></h1>
 <p class="giris">Kalbin kararlarını iktisadın diliyle sınayan bir seri. Her Pazartesi ve Perşembe yeni bir test açılıyor. Beş test çöz, Aşkonomi Karnen açılsın.</p></div>
-<div class="ozel-serit"><a href="/kimya/"><span class="etiket">Yeni · Özel bölüm</span><b>Aşkın Kimyası</b><span>Etkileşimli beden haritası, evre testi ve 6 mit</span></a><a href="/grafik/"><span class="etiket">Yeni · Araç</span><b>Aşkının Grafiği</b><span>İlişkinin değer–zaman eğrisini çiz, piyasa yorumunu al</span></a></div>
+<div class="ozel-serit"><a href="/kimya/"><span class="etiket">Yeni · Özel bölüm</span><b>Aşkın Kimyası</b><span>Etkileşimli beden haritası, evre testi ve 6 mit</span></a><a href="/oyunlar/"><span class="etiket">Yeni · Oyunlar</span><b>Aşkonomi Oyunları</b><span>Güven oyunu, eşleşme köyü, beklenti bütçesi ve dahası</span></a></div>
 <div id="uygulama"><noscript>Testleri çözmek için JavaScript gerekiyor.</noscript></div></div>"""
     yaz("testler/index.html", sayfa("Aşkonomi Testleri · 40 test, 4 sezon", "Aşk hayatını hangi iktisadi kavram anlatıyor? 40 test, 4 sezon. Her Pazartesi ve Perşembe yeni test.",
                                    "/testler/", "/og/testler.jpg", govde, "merkez", aktif="testler"))
@@ -186,7 +186,7 @@ def gorseller():
 
 def site_haritasi():
     bugun = datetime.date.today().isoformat()
-    u = ["/", "/kvkk.html", "/testler/", "/kimya/", "/grafik/"] + [f"/test/{t['slug']}/" for t in TESTLER if t.get("sorular") or t["tur"] == "karne"]
+    u = ["/", "/kvkk.html", "/testler/", "/kimya/", "/grafik/"] + [x[1] for x in OYUN_SAYFA if os.path.exists(os.path.join(KOK, "_kaynak", "oyunlar", x[0] + ".html"))] + [f"/test/{t['slug']}/" for t in TESTLER if t.get("sorular") or t["tur"] == "karne"]
     yaz("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
         "".join(f"<url><loc>{SITE}{x}</loc><lastmod>{bugun}</lastmod></url>" for x in u) + "</urlset>\n")
 
@@ -198,7 +198,24 @@ def ozel_sayfalar():
     yaz("kimya/index.html", sayfa("Aşkın Kimyası · Aşkonomi", "Âşık olunca beyninde, kalbinde ve vücudunda neler oluyor? Etkileşimli beden haritası, evre testi ve 6 mit, kaynaklarıyla.",
                                   "/kimya/", "/og/kimya.jpg", oku("govde_kimya.html").replace("{SURUM}", SURUM), "kimya", aktif="kimya"))
     yaz("grafik/index.html", sayfa("Aşkının Grafiği · Aşkonomi", "İlişkinin değer–zaman eğrisini çiz, Aşkonomi sana piyasa yorumunu versin: yükseliş, balon, toparlanma ya da yatay seyir.",
-                                   "/grafik/", "/og/grafik.jpg", oku("govde_grafik.html").replace("{SURUM}", SURUM), "grafik", aktif="grafik"))
+                                   "/grafik/", "/og/grafik.jpg", oku("govde_grafik.html").replace("{SURUM}", SURUM), "grafik", aktif="oyunlar"))
+
+OYUN_SAYFA = [
+    ("merkez", "/oyunlar/", "Oyunlar · Aşkonomi", "Kitabın iktisat kavramlarını oynayarak dene: güven oyunu, eşleşme köyü, beklenti bütçesi, kaydırma simülatörü ve Türkiye’nin aşk haritası."),
+    ("guven", "/oyunlar/guven/", "Güven oyunu · Aşkonomi", "Bir partnerle on tur. Emanet ettiğin her jeton üçe katlanır. Güven sermayesi nasıl birikir, nasıl erir?"),
+    ("eslesme", "/oyunlar/eslesme/", "Eşleşme köyü · Aşkonomi", "Sekiz kişilik bir köyü Nobel ödüllü algoritmayla eşleştir. Kimin teklif ettiği sonucu nasıl değiştiriyor?"),
+    ("beklenti", "/oyunlar/beklenti/", "Beklenti bütçesi · Aşkonomi", "Hayalindeki partnerden ne bekliyorsun? Bir insanın gerçek kapasitesiyle karşılaştır, beklenti enflasyonunu gör."),
+    ("kaydirma", "/oyunlar/kaydirma/", "Kaydırma simülatörü · Aşkonomi", "Otuz profil kaydır, dikkatinin nasıl eridiğini kendi verinle gör."),
+    ("harita", "/oyunlar/harita/", "Türkiye’nin aşk haritası · Aşkonomi", "Hangi ilde insanlar daha erken evleniyor, nerede boşanma daha sık? TÜİK verisiyle il il harita."),
+]
+
+def oyun_sayfalari():
+    for slug, url, baslik, acik in OYUN_SAYFA:
+        yol = os.path.join(KOK, "_kaynak", "oyunlar", slug + ".html")
+        if not os.path.exists(yol): continue
+        hedef = "oyunlar/index.html" if slug == "merkez" else f"oyunlar/{slug}/index.html"
+        og = "/og/oyunlar.jpg" if slug == "merkez" else f"/og/oyun-{slug}.jpg"
+        yaz(hedef, sayfa(baslik, acik, url, og, oku(os.path.join("oyunlar", slug + ".html")).replace("{SURUM}", SURUM), "oyun", slug, aktif="oyunlar"))
 
 def og_kimya():
     im, d = taban("ÖZEL BÖLÜM")
@@ -224,6 +241,6 @@ def og_grafik():
     return im
 
 if __name__ == "__main__":
-    js_veri(); merkez_sayfa(); test_sayfalari(); ozel_sayfalar(); gorseller(); site_haritasi()
+    js_veri(); merkez_sayfa(); test_sayfalari(); ozel_sayfalar(); oyun_sayfalari(); gorseller(); site_haritasi()
     kaydet_jpg(og_kimya(), "og/kimya.jpg"); kaydet_jpg(og_grafik(), "og/grafik.jpg")
     print("tamam:", len(TESTLER), "test;", sum(len(sonuclar(t)) for t in TESTLER), "sonuç sayfası")

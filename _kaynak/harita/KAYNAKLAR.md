@@ -108,3 +108,14 @@ Bu yüzden bu dosyadaki il verilerinin TAMAMI **ikincil kaynaktan** alındı. De
 ### Eksikler ve yapılacaklar
 - Eksik il yok.
 - Yayından önce önerilen: TÜİK bülten tablosu "İllere göre toplam doğurganlık hızı ve kaba doğum hızı, 2025" indirilip iki sütunun birebir karşılaştırılması. Özellikle kaba_dogum sütunu için.
+
+
+## hane_verisi.csv
+- **Değişken:** ortalama hanehalkı büyüklüğü (kişi), 2025, 81/81 il.
+- **Kaynak:** Prof. Dr. Mehmet Şahin, "Türkiye Araştırma Master Veri Arşivi v1" (2026-09-08), sayfa PROV_CORE_QUICK, sütun DEM_ORT_HANE_BUYUKLUGU. Arşivde kaynak: TÜİK ADNKS (prov_macro_wide_corr.csv, ana provincial macro bankası).
+- **Türkiye geneli (2025):** 3,08 (TÜİK, İstatistiklerle Aile 2025).
+- **Kontrol:** Web'de bulunan altı il değeriyle birebir aynı: Şırnak 4,84; Şanlıurfa 4,63; Batman 4,43; Tunceli 2,49; Giresun 2,50; Çanakkale 2,51.
+
+## Arşivle doğurganlık tutarlılık kontrolü
+- Aynı arşivdeki DERA__tfr serisi 2018–2022 için 81 ili kapsıyor (2023 sonrası yok).
+- 2022 arşiv değerleri ile dogum_verisi.csv 2025 değerleri arasında korelasyon 0,989; 81 ilin 81'inde TDH düşmüş; ortalama düşüş 0,23.

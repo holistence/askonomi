@@ -11,6 +11,7 @@
     tdh: { ad: 'Çocuk sayısı', birim: 'kadın başına ortalama çocuk (toplam doğurganlık hızı)', renk: ['#e6e1ef', '#bfb1d8', '#8f78b8', '#634892', '#3a2560'] }
   };
   if (!(H.iller[0] && typeof H.iller[0].tdh === 'number')) delete GOS.tdh;
+  if (H.iller[0] && typeof H.iller[0].hane === 'number') GOS.hane = { ad: 'Hane büyüklüğü', birim: 'bir hanede ortalama kişi', renk: ['#e3ece0', '#b6cfad', '#7fa874', '#4e7b45', '#28481f'] };
   var gos = 'ev', secili = null, hover = null;
   H.iller.forEach(function (i) { i.oran = Math.round(i.bos / i.ev * 100); });
   H.tr.oran = Math.round(H.tr.bos / H.tr.ev * 100);
@@ -20,7 +21,7 @@
     return [0.2, 0.4, 0.6, 0.8].map(function (q) { return v[Math.floor(q * (v.length - 1))]; });
   }
   function renk(i, s) { var x = deger(i), k = 0; s.forEach(function (e) { if (x > e) k++; }); return GOS[gos].renk[k]; }
-  function f(x) { return gos === 'oran' ? String(Math.round(x)) : gos === 'tdh' ? x.toFixed(2).replace('.', ',') : x.toFixed(1).replace('.', ','); }
+  function f(x) { return gos === 'oran' ? String(Math.round(x)) : (gos === 'tdh' || gos === 'hane') ? x.toFixed(2).replace('.', ',') : x.toFixed(1).replace('.', ','); }
   function sira(i) { var l = H.iller.slice().sort(function (a, b) { return deger(b) - deger(a); }); return l.indexOf(i) + 1; }
 
   kok.innerHTML =
@@ -30,7 +31,7 @@
     '<div class="hr-ipucu" id="hrIpucu" hidden></div></div>' +
     '<div class="hr-lejant" id="hrLejant"></div>' +
     '<div class="hr-alt"><div class="hr-kart" id="hrKart" aria-live="polite"></div><div class="hr-uclar" id="hrUclar"></div></div>' +
-    '<p class="oy-not hr-kaynak">Veri: TÜİK, Evlenme ve Boşanma İstatistikleri 2025 (24 Şubat 2026)' + (H.dogumKaynak ? '; TÜİK, ' + H.dogumKaynak : '') + '. Kaba hız, il nüfusunun bin kişisi başına düşen evlenme ya da boşanma sayısıdır. Harita sınırları: alpers/Turkey-Maps-GeoJSON, Apache 2.0 lisansı.</p>' +
+    '<p class="oy-not hr-kaynak">Veri: TÜİK, Evlenme ve Boşanma İstatistikleri 2025 (24 Şubat 2026)' + (H.dogumKaynak ? '; TÜİK, ' + H.dogumKaynak : '') + (H.haneKaynak ? '; TÜİK, ' + H.haneKaynak : '') + '. Kaba hız, il nüfusunun bin kişisi başına düşen evlenme ya da boşanma sayısıdır. Harita sınırları: alpers/Turkey-Maps-GeoJSON, Apache 2.0 lisansı.</p>' +
     '<div id="hrSon"></div>';
   var g = document.getElementById('hrIller');
   H.iller.forEach(function (i) {
@@ -47,7 +48,7 @@
   function ipucu(e) {
     if (!hover || e.pointerType === 'touch') return;
     var t = document.getElementById('hrIpucu'), c = t.parentNode.getBoundingClientRect();
-    t.hidden = false; t.innerHTML = '<b>' + hover.il + '</b> ' + f(deger(hover)) + (gos === 'oran' ? '' : gos === 'tdh' ? ' çocuk' : '‰');
+    t.hidden = false; t.innerHTML = '<b>' + hover.il + '</b> ' + f(deger(hover)) + (gos === 'oran' ? '' : gos === 'tdh' ? ' çocuk' : gos === 'hane' ? ' kişi' : '‰');
     var x = e.clientX - c.left + 14, y = e.clientY - c.top - 34;
     t.style.left = Math.min(x, c.width - t.offsetWidth - 4) + 'px'; t.style.top = Math.max(0, y) + 'px';
   }
@@ -55,7 +56,7 @@
     var s = siniflar();
     H.iller.forEach(function (i) { i.el.style.fill = renk(i, s); });
     var r = GOS[gos].renk, sinir = [H.iller.map(deger).reduce(function (a, b) { return Math.min(a, b); })].concat(s).concat([H.iller.map(deger).reduce(function (a, b) { return Math.max(a, b); })]);
-    document.getElementById('hrLejant').innerHTML = '<span>' + GOS[gos].birim + (gos === 'oran' || gos === 'tdh' ? '' : ' (‰)') + '</span><div>' + r.map(function (c, k) { return '<i style="background:' + c + '"><em>' + f(sinir[k]) + '–' + f(sinir[k + 1]) + '</em></i>'; }).join('') + '</div><span class="hr-tr">Türkiye: <b>' + f(H.tr[gos]) + '</b></span>';
+    document.getElementById('hrLejant').innerHTML = '<span>' + GOS[gos].birim + (gos === 'oran' || gos === 'tdh' || gos === 'hane' ? '' : ' (‰)') + '</span><div>' + r.map(function (c, k) { return '<i style="background:' + c + '"><em>' + f(sinir[k]) + '–' + f(sinir[k + 1]) + '</em></i>'; }).join('') + '</div><span class="hr-tr">Türkiye: <b>' + f(H.tr[gos]) + '</b></span>';
     var l = H.iller.slice().sort(function (a, b) { return deger(b) - deger(a); });
     var li = function (i) { return '<li><button data-p="' + i.p + '">' + i.il + '</button><b>' + f(deger(i)) + '</b></li>'; };
     document.getElementById('hrUclar').innerHTML = '<div><small>En yüksek</small><ol>' + l.slice(0, 5).map(li).join('') + '</ol></div><div><small>En düşük</small><ol>' + l.slice(-5).reverse().map(li).join('') + '</ol></div>';
@@ -75,7 +76,7 @@
     k.innerHTML = '<p class="oy-adim">' + i.p + ' plaka · ' + sira(i) + '. sırada (' + GOS[gos].ad.toLowerCase() + ')</p><h3 class="hr-il-ad">' + i.il + '</h3>' +
       '<div class="hr-cubuklar">' +
       cubuk('Evlenme', i.ev, H.tr.ev, 8.5, GOS.ev.renk[3], fark(i.ev, H.tr.ev)) + cubuk('Boşanma', i.bos, H.tr.bos, 3.5, GOS.bos.renk[3], fark(i.bos, H.tr.bos)) +
-      (GOS.tdh ? cocuk(i) : '') + '</div><p class="hr-oran">Her 100 evliliğe karşı <b>' + i.oran + '</b> boşanma <span>(Türkiye: ' + H.tr.oran + ')</span></p><p>' + yorum + '</p>' +
+      (GOS.tdh ? cocuk(i) : '') + (GOS.hane ? hane(i) : '') + '</div><p class="hr-oran">Her 100 evliliğe karşı <b>' + i.oran + '</b> boşanma <span>(Türkiye: ' + H.tr.oran + ')</span></p><p>' + yorum + '</p>' +
       '<div class="paylas"><a class="wa" data-k="wa" target="_blank" rel="noopener" href="#">WhatsApp</a><a data-k="x" target="_blank" rel="noopener" href="#">X</a><button data-k="indir">Görseli indir</button><button data-k="kopya">Bağlantıyı kopyala</button></div>';
     O.paylasBagla(k, { slug: 'harita', url: O.SITE + '/oyunlar/harita/?il=' + i.p, mesaj: 'Türkiye’nin aşk haritasında ' + i.il + ': bin kişide ' + i.ev.toFixed(1).replace('.', ',') + ' evlenme, ' + i.bos.toFixed(1).replace('.', ',') + ' boşanma' + (GOS.tdh ? ', kadın başına ' + i.tdh.toFixed(2).replace('.', ',') + ' çocuk' : '') + ' (TÜİK). Senin ilin?',
       kartAyar: { oyun: 'Türkiye’nin aşk haritası', ust: 'TÜİK 2025', baslik: i.il, alt: 'Bin kişide ' + i.ev.toFixed(1).replace('.', ',') + ' evlenme · ' + i.bos.toFixed(1).replace('.', ',') + ' boşanma', ciz: function (x, X, Y, W, HH) { kartCiz(x, X, Y, W, HH, i); } } });
@@ -87,6 +88,10 @@
       ikon += '<svg viewBox="0 0 24 24" class="hr-cocuk"><defs><clipPath id="hc' + i.p + k + '"><rect width="' + (24 * dol) + '" height="24"/></clipPath></defs><g fill="none" stroke="#634892" stroke-width="1.6"><circle cx="12" cy="7" r="3.6"/><path d="M5.5 21c.6-5.4 3.2-8.2 6.5-8.2s5.9 2.8 6.5 8.2z"/></g><g clip-path="url(#hc' + i.p + k + ')" fill="#634892"><circle cx="12" cy="7" r="3.6"/><path d="M5.5 21c.6-5.4 3.2-8.2 6.5-8.2s5.9 2.8 6.5 8.2z"/></g></svg>';
     }
     return '<div class="hr-c hr-c-cocuk"><span>Çocuk</span><div class="hr-ikonlar">' + ikon + '</div><b>' + i.tdh.toFixed(2).replace('.', ',') + '</b><small>' + (d >= 0 ? '+' : '−') + Math.abs(d).toFixed(2).replace('.', ',') + '</small></div>';
+  }
+  function hane(i) {
+    var d = i.hane - H.tr.hane, mx = 5;
+    return '<div class="hr-c"><span>Hane</span><div class="hr-c-ic"><i style="width:' + (i.hane / mx * 100) + '%;background:#4e7b45"></i><u style="left:' + (H.tr.hane / mx * 100) + '%" title="Türkiye ' + H.tr.hane + '"></u></div><b>' + i.hane.toFixed(2).replace('.', ',') + '</b><small>' + (d >= 0 ? '+' : '−') + Math.abs(d).toFixed(2).replace('.', ',') + '</small></div>';
   }
   function cubuk(ad, v, tr, mx, renk, fk) {
     return '<div class="hr-c"><span>' + ad + '</span><div class="hr-c-ic"><i style="width:' + (v / mx * 100) + '%;background:' + renk + '"></i><u style="left:' + (tr / mx * 100) + '%" title="Türkiye ' + tr + '"></u></div><b>' + v.toFixed(1).replace('.', ',') + '‰</b><small>' + fk + '</small></div>';

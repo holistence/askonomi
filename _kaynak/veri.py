@@ -89,9 +89,17 @@ def takvim():
 # ---- İçerikler: kitabın v45 metnine dayanır; kaynak sayfaları _kaynak/raporlar/ ----
 import importlib.util as _iu, os as _os
 ICERIK = {}
-for _n in (1, 2, 3, 4):
-    _sp = _iu.spec_from_file_location(f"icerik_s{_n}", _os.path.join(_os.path.dirname(__file__), f"icerik_s{_n}.py"))
+for _n in ("s1", "s2", "s3", "s4", "ozel"):
+    _sp = _iu.spec_from_file_location(f"icerik_{_n}", _os.path.join(_os.path.dirname(__file__), f"icerik_{_n}.py"))
     _m = _iu.module_from_spec(_sp); _sp.loader.exec_module(_m); ICERIK.update(_m.ICERIK)
+
+
+# ---- Aşkın Kimyası özel bölümü: seri dışı, numarasız, sayaçlara ve karneye girmez ----
+OZEL = [
+    ("ask-evresi", "Âşık beynin hangi evrede?", "profil"),
+    ("askin-kimyasi-mitleri", "Aşkın kimyası: 6 iddia, kaçı doğru?", "mit"),
+]
+OZEL_ACILIS = _dt.date(2026, 10, 20)
 
 
 def tum_testler():
@@ -103,5 +111,10 @@ def tum_testler():
              "acilis": t[no].isoformat()}
         if slug in ICERIK:
             d.update(ICERIK[slug])
+        out.append(d)
+    for slug, ad, tur in OZEL:
+        d = {"no": 0, "slug": slug, "ad": ad, "tur": tur, "bolum": "", "sezon": 0,
+             "acilis": OZEL_ACILIS.isoformat(), "ozel": True}
+        d.update(ICERIK[slug])
         out.append(d)
     return out

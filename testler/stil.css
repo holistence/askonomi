@@ -108,3 +108,86 @@ input.ad{width:100%;font:inherit;font-size:19px;padding:12px 14px;border:1px sol
 .karne-liste b{font:600 19px/1.25 Fraunces,serif;color:var(--bordo)}
 .uyari{font-size:15px;color:var(--soluk);text-align:center;max-width:720px;margin:14px auto 0}
 .gizli{display:none!important}
+
+/* ---------- özel bölüm şeridi (testler merkezi) ---------- */
+.ozel-serit{display:grid;grid-template-columns:1fr;gap:12px;margin:6px 0 4px}
+@media(min-width:700px){.ozel-serit{grid-template-columns:1fr 1fr}}
+.ozel-serit a{display:flex;flex-direction:column;gap:4px;text-decoration:none;background:var(--murekkep);color:var(--zemin);padding:18px 20px;border:1px solid var(--murekkep);transition:transform .2s}
+.ozel-serit a:hover{transform:translateY(-2px);background:var(--bordo);border-color:var(--bordo)}
+.ozel-serit .etiket{color:#e9a3ad;margin:0}.ozel-serit a:hover .etiket{color:#fff}
+.ozel-serit b{font:600 24px/1.15 Fraunces,serif}.ozel-serit span:last-child{font-size:16px;opacity:.8}
+
+/* ---------- Aşkın Kimyası ---------- */
+.kim-evre{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0 16px}
+.kim-evre span{font:500 12px/1 Fraunces,serif;letter-spacing:.22em;text-transform:uppercase;color:var(--soluk);margin-right:4px}
+.kim-evre button{font:500 15px/1 Fraunces,serif;letter-spacing:.06em;padding:10px 16px;border:1px solid var(--cizgi);background:var(--kagit);color:var(--murekkep);cursor:pointer}
+.kim-evre button.secili{background:var(--bordo);border-color:var(--bordo);color:#fff}
+.kim-izgara{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
+@media(min-width:760px){.kim-izgara{grid-template-columns:minmax(260px,400px) 1fr}}
+.kim-figur{max-width:400px;width:100%;margin:0 auto}
+.kim-figur svg{display:block;width:100%;height:auto;max-height:70vh;overflow:visible}
+.kim-govde{fill:var(--kagit);stroke:var(--murekkep);stroke-width:2.5;stroke-linejoin:round}
+.kim-beyin{fill:#f6e4e2;stroke:var(--murekkep);stroke-width:2.5}
+.kim-kivrim{fill:none;stroke:var(--murekkep);stroke-opacity:.35;stroke-width:2.5;stroke-linecap:round}
+.kim-kalp{fill:#f3d6d6;stroke:var(--bordo);stroke-width:3}
+.kim-nokta{cursor:pointer;outline:none}
+.kim-nokta .isik{opacity:0;transition:opacity .3s;pointer-events:none}
+.kim-nokta .halka{fill:none;pointer-events:none;stroke:var(--bordo);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:kimNabiz 2.2s ease-out infinite}
+.kim-nokta .ic{fill:var(--bordo);stroke:#fff;stroke-width:3;transition:transform .2s;transform-box:fill-box;transform-origin:center}
+.kim-nokta text{fill:#fff;font:600 13px Fraunces,serif;pointer-events:none}
+.kim-nokta .tut{fill:transparent}
+.kim-nokta:hover .ic,.kim-nokta:focus-visible .ic,.kim-nokta.secili .ic{transform:scale(1.18)}
+.kim-nokta.secili .isik,.kim-nokta:focus-visible .isik{opacity:1}
+.kim-nokta.secili .ic{fill:var(--murekkep)}
+.kim-nokta.sonuk{opacity:.22}.kim-nokta.sonuk .halka{animation:none;opacity:0}
+@keyframes kimNabiz{0%{transform:scale(.8);opacity:.9}100%{transform:scale(1.7);opacity:0}}
+@media(prefers-reduced-motion:reduce){.kim-nokta .halka{animation:none}}
+.kim-panel{min-height:0}
+.kim-panel h2{font-size:clamp(28px,6vw,38px);line-height:1.05;margin:0 0 12px}
+.kim-panel p{margin:0 0 12px}
+.kim-kimyasal{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.kim-kimyasal span{font:500 15px/1 Fraunces,serif;padding:8px 12px;background:var(--murekkep);color:var(--zemin)}
+.kim-alt{display:flex;flex-wrap:wrap;align-items:center;gap:10px;border-top:1px solid var(--cizgi);padding-top:12px;margin-top:6px;font-size:16px;color:var(--soluk)}
+.kd{font:600 12px/1 Fraunces,serif;letter-spacing:.12em;text-transform:uppercase;padding:6px 8px;color:#fff;display:inline-block}
+.kd.guclu{background:var(--yesil)}.kd.orta{background:#a5701a}.kd.sinirli{background:var(--bordo)}
+.kim-gez{display:flex;gap:8px;margin-top:16px}
+.kim-gez button{font:500 14px/1 Fraunces,serif;letter-spacing:.08em;padding:12px 14px;border:1px solid var(--murekkep);background:none;cursor:pointer;color:var(--murekkep)}
+.kim-gez button:hover{background:var(--murekkep);color:var(--zemin)}
+.kim-liste{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+.kim-cip{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:16px;padding:8px 12px 8px 8px;border:1px solid var(--cizgi);background:var(--kagit);cursor:pointer;color:var(--murekkep)}
+.kim-cip span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--bordo);color:#fff;font:600 13px/1 Fraunces,serif}
+.kim-cip.secili{border-color:var(--murekkep);background:#fff}.kim-cip.sonuk{opacity:.4}
+.kim-dene,.kim-kaynak{padding:40px 0 0}
+.kim-dene h2,.kim-kaynak h2{font-size:clamp(26px,5vw,34px);border-bottom:1px solid var(--cizgi);padding-bottom:10px;margin-bottom:16px}
+.kim-kaynak ol{padding-left:22px;font-size:17px}.kim-kaynak li{margin-bottom:8px;padding-left:22px;text-indent:-22px;list-style-position:outside}
+.kim-not{font-size:16px;color:var(--soluk);line-height:1.5}
+.kim-not .kd{margin:0 2px}
+
+/* ---------- Aşkının Grafiği ---------- */
+.gr-kart{min-height:0}
+.gr-kart svg{display:block;width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none}
+.gr-izgara{stroke:rgba(38,32,40,.08);stroke-width:1.5}
+.gr-eksen{stroke:#b9ad9c;stroke-width:2}
+.gr-etk{font:italic 400 22px "Crimson Pro",serif;fill:var(--soluk)}
+.gr-sayi{font:400 20px "Crimson Pro",serif;fill:#a69b8c}
+.gr-donem{font:500 23px Fraunces,serif;fill:var(--soluk)}
+.gr-cizgi{fill:none;stroke:var(--bordo);stroke-width:5;stroke-linejoin:round;stroke-linecap:round}
+.gr-nokta{cursor:ns-resize;outline:none}
+.gr-nokta .tut{fill:transparent}
+.gr-nokta .gor{fill:var(--bordo);stroke:#fff;stroke-width:3;transition:r .15s}
+.gr-nokta:hover .gor,.gr-nokta.aktif .gor,.gr-nokta:focus-visible .gor{r:14;fill:var(--murekkep)}
+.gr-deger{font:600 24px Fraunces,serif;fill:var(--murekkep)}
+.gr-araclar{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.gr-ipucu{margin:14px 0 0}
+.gr-ust .davet{display:block;margin-bottom:10px}
+.gr-sonuc{margin-top:18px;min-height:0}
+.gr-olcu{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 16px}
+@media(min-width:620px){.gr-olcu{grid-template-columns:repeat(4,1fr)}}
+.gr-olcu div{border:1px solid var(--cizgi);padding:10px 12px;background:var(--zemin)}
+.gr-olcu small{display:block;font:500 11px/1 Fraunces,serif;letter-spacing:.18em;text-transform:uppercase;color:var(--soluk)}
+.gr-olcu b{display:block;font:600 26px/1.2 Fraunces,serif;margin:6px 0 0}
+.gr-olcu span{font-size:14px;color:var(--soluk)}
+
+@media(max-width:480px){header nav{gap:12px;font-size:15px}header nav a[href="/#takip"]{display:none}}
+@media(max-width:360px){.logo{font-size:17px;gap:8px}.logo img{width:28px;height:28px}}
+@media(max-width:759px){.kim-figur svg{max-height:56vh}}

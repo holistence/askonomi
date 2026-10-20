@@ -2,6 +2,9 @@
 (function () {
   'use strict';
   var V = window.ASKV, SITE = 'https://askonomi.com';
+  // Özel bölüm testleri (Aşkın Kimyası) serinin dışında: sayaçlara, sıraya ve karneye girmez.
+  var TUM = V.testler;
+  V.testler = TUM.filter(function (t) { return !t.ozel; });
   var AY = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
   var GUN = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
   var ACILIS_SAATI = 'T09:00:00+03:00';
@@ -42,7 +45,7 @@
     var f = function () { el.innerHTML = sayacHTML(hedef); if (Date.now() >= hedef) { clearInterval(z); location.reload(); } };
     f(); var z = setInterval(f, 1000);
   }
-  function testBul(slug) { for (var i = 0; i < V.testler.length; i++) if (V.testler[i].slug === slug) return V.testler[i]; return null; }
+  function testBul(slug) { for (var i = 0; i < TUM.length; i++) if (TUM[i].slug === slug) return TUM[i]; return null; }
   function bolumAd(n) { return V.bolum[n] ? 'Bölüm ' + parseInt(n, 10) + ' · ' + V.bolum[n] : ''; }
   function testUrl(t) { return '/test/' + t.slug + '/'; }
 
@@ -274,6 +277,8 @@
     return '<div class="abone-kutu"><p>Yeni testler her Pazartesi ve Perşembe açılıyor. Haber almak ve kitap çıktığında ilk duymak için:</p><a class="btn abone-git" href="/#takip">E-posta listesine katıl</a></div>';
   }
   function altBaglar(yeniden) {
+    var oz = testBul(document.body.dataset.slug || '');
+    if (oz && oz.ozel) return '<div class="alt-baglar"><a href="/kimya/">← Aşkın Kimyası</a>' + (yeniden ? '<button id="yeniden">Bu testi yeniden çöz</button>' : '') + '<a href="/testler/">40 testlik seri</a><a href="https://instagram.com/askonomikitap" target="_blank" rel="noopener">@askonomikitap</a></div>';
     return '<div class="alt-baglar"><a href="/testler/">Tüm testler (' + cozulenSayisi() + '/' + (V.testler.length - 1) + ')</a>' + (yeniden ? '<button id="yeniden">Bu testi yeniden çöz</button>' : '') + '<a href="https://instagram.com/askonomikitap" target="_blank" rel="noopener">@askonomikitap</a></div>';
   }
   function kopyala(s, el) { try { navigator.clipboard.writeText(s); el.textContent = 'Kopyalandı'; } catch (e) { prompt('Bağlantı:', s); } }

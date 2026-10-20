@@ -22,7 +22,7 @@ def js_veri():
     tl = []
     for t in TESTLER:
         d = {k: t[k] for k in ("no", "slug", "ad", "tur", "bolum", "sezon", "acilis")}
-        for k in ("kanca", "sorular", "sonuclar", "seviyeler", "birim"):
+        for k in ("kanca", "sorular", "sonuclar", "seviyeler", "birim", "ozel"):
             if k in t: d[k] = t[k]
         if t["tur"] == "mit": d["bolum"] = t.get("bolum", t["bolum"])
         tl.append(d)
@@ -55,7 +55,7 @@ def sayfa(baslik, aciklama, url, gorsel, govde, sayfa_tur, slug="", aktif=""):
 <script defer src="https://cloud.umami.is/script.js" data-website-id="e2b973cb-62c0-4a6a-b9de-1fd1de7402e8"></script>
 </head>
 <body data-sayfa="{sayfa_tur}" data-slug="{slug}">
-<header><div class="wrap"><a class="logo" href="/"><img src="/img/simge.png" alt="">AŞKONOMİ</a><nav><a href="/testler/"{' class="aktif"' if aktif=='testler' else ''}>Testler</a><a href="/#takip">Takip et</a></nav></div></header>
+<header><div class="wrap"><a class="logo" href="/"><img src="/img/simge.png" alt="">AŞKONOMİ</a><nav><a href="/testler/"{' class="aktif"' if aktif=='testler' else ''}>Testler</a><a href="/kimya/"{' class="aktif"' if aktif=='kimya' else ''}>Kimya</a><a href="/grafik/"{' class="aktif"' if aktif=='grafik' else ''}>Grafik</a><a href="/#takip">Takip et</a></nav></div></header>
 <main>{govde}</main>
 <footer><div class="wrap"><span>© 2026 Prof. Dr. Mehmet Şahin · askonomi.com</span><span>Testler eğlence ve düşünme amaçlıdır; psikolojik tanı aracı değildir. <a href="/kvkk.html">KVKK</a></span></div></footer>
 <script src="/testler/veri.js?v={SURUM}"></script>
@@ -68,6 +68,7 @@ def merkez_sayfa():
     govde = """<div class="wrap"><div class="ust-alan"><span class="etiket">Aşkonomi Test Serisi</span>
 <h1>40 test.<br><em>4 sezon.</em></h1>
 <p class="giris">Kalbin kararlarını iktisadın diliyle sınayan bir seri. Her Pazartesi ve Perşembe yeni bir test açılıyor. Beş test çöz, Aşkonomi Karnen açılsın.</p></div>
+<div class="ozel-serit"><a href="/kimya/"><span class="etiket">Yeni · Özel bölüm</span><b>Aşkın Kimyası</b><span>Etkileşimli beden haritası, evre testi ve 6 mit</span></a><a href="/grafik/"><span class="etiket">Yeni · Araç</span><b>Aşkının Grafiği</b><span>İlişkinin değer–zaman eğrisini çiz, piyasa yorumunu al</span></a></div>
 <div id="uygulama"><noscript>Testleri çözmek için JavaScript gerekiyor.</noscript></div></div>"""
     yaz("testler/index.html", sayfa("Aşkonomi Testleri · 40 test, 4 sezon", "Aşk hayatını hangi iktisadi kavram anlatıyor? 40 test, 4 sezon. Her Pazartesi ve Perşembe yeni test.",
                                    "/testler/", "/og/testler.jpg", govde, "merkez", aktif="testler"))
@@ -77,20 +78,22 @@ def test_sayfalari():
         no = f"{t['no']:02d}"
         tur = V.TUR_AD.get(t["tur"], "")
         kanca = t.get("kanca", "")
-        govde = f"""<div class="wrap test-sayfa"><div class="test-ust"><span class="etiket">Test {no} · {E(tur)} · Sezon {t['sezon']}</span>
+        ust_etiket = f"Aşkın Kimyası · {E(tur)}" if t.get("ozel") else f"Test {no} · {E(tur)} · Sezon {t['sezon']}"
+        govde = f"""<div class="wrap test-sayfa"><div class="test-ust"><span class="etiket">{ust_etiket}</span>
 <h1>{E(t['ad'])}</h1>{f'<p class="kanca">{E(kanca)}</p>' if kanca else ''}</div>
 <div id="uygulama"><noscript>Bu testi çözmek için JavaScript gerekiyor.</noscript></div></div>"""
         acik = kanca or ("Aşkonomi test serisi, test " + no + ".")
-        yaz(f"test/{t['slug']}/index.html", sayfa(t["ad"] + " · Aşkonomi", acik, f"/test/{t['slug']}/", f"/og/{t['slug']}.jpg", govde, "test", t["slug"], "testler"))
+        akt = "kimya" if t.get("ozel") else "testler"
+        yaz(f"test/{t['slug']}/index.html", sayfa(t["ad"] + " · Aşkonomi", acik, f"/test/{t['slug']}/", f"/og/{t['slug']}.jpg", govde, "test", t["slug"], akt))
         # sonuç paylaşım sayfaları
         for k, ad, metin, bolum in sonuclar(t):
-            g = f"""<div class="wrap test-sayfa"><div class="test-ust"><span class="etiket">Aşkonomi · Test {no}</span><h1>{E(t['ad'])}</h1></div>
+            g = f"""<div class="wrap test-sayfa"><div class="test-ust"><span class="etiket">Aşkonomi · {'Aşkın Kimyası' if t.get('ozel') else 'Test ' + no}</span><h1>{E(t['ad'])}</h1></div>
 <div class="kart sonuc"><span class="bolumno">Arkadaşının sonucu</span><h2>{E(ad)}</h2><p>{E(metin)}</p>
 {f'<p class="not">Kitapta: Bölüm {int(bolum)} · {E(V.BOLUM[bolum])}</p>' if bolum else ''}
 <p class="not" id="kendi"></p>
 <p style="margin-top:18px"><a class="btn" href="/test/{t['slug']}/">Sen de çöz →</a> <a class="btn ikincil" href="/testler/">Tüm testler</a></p></div></div>"""
             yaz(f"test/{t['slug']}/s/{k}/index.html", sayfa(f"“{ad}” · {t['ad']}", f"Benim sonucum: {ad}. Seninki ne? Aşkonomi test serisi.",
-                                                         f"/test/{t['slug']}/s/{k}/", f"/og/{t['slug']}-{k}.jpg", g, "sonuc", t["slug"], "testler"))
+                                                         f"/test/{t['slug']}/s/{k}/", f"/og/{t['slug']}-{k}.jpg", g, "sonuc", t["slug"], akt))
 
 def sonuclar(t):
     if "sonuclar" in t:
@@ -136,7 +139,7 @@ def taban(ust_metin):
 
 def og_test(t):
     no = f"{t['no']:02d}"
-    im, d = taban(tr_upper(f"TEST {no} · {V.TUR_AD.get(t['tur'],'')} · SEZON {t['sezon']}"))
+    im, d = taban(tr_upper(f"AŞKIN KİMYASI · {V.TUR_AD.get(t['tur'],'')}" if t.get("ozel") else f"TEST {no} · {V.TUR_AD.get(t['tur'],'')} · SEZON {t['sezon']}"))
     f, sat = sigdir(d, t["ad"], "Fraunces-SemiBold", 76, 46, W - 140, 3)
     y = 200 + (3 - len(sat)) * 24
     for s in sat:
@@ -146,13 +149,13 @@ def og_test(t):
     fa, sa = sigdir(d, alt, "CrimsonPro-Italic", 32, 24, W - 140, 2)
     y += 16
     for s in sa: d.text((64, y), s, font=fa, fill=SOLUK); y += int(fa.size * 1.2)
-    d.text((64, H - 78), "askonomi.com/testler", font=F("Fraunces-Medium", 24), fill=BORDO)
+    d.text((64, H - 78), "askonomi.com/kimya" if t.get("ozel") else "askonomi.com/testler", font=F("Fraunces-Medium", 24), fill=BORDO)
     tag = "ÇÖZ, SONUCUNU PAYLAŞ"
     ft = F("Fraunces-Medium", 20); d.text((W - 64 - d.textlength(tag, font=ft), H - 74), tag, font=ft, fill=MUREKKEP)
     return im
 
 def og_sonuc(t, ad):
-    im, d = taban(tr_upper(f"TEST {t['no']:02d} · {t['ad']}")[:80])
+    im, d = taban(tr_upper(f"AŞKIN KİMYASI · {t['ad']}" if t.get("ozel") else f"TEST {t['no']:02d} · {t['ad']}")[:80])
     d.text((64, 186), "Sonucum:", font=F("CrimsonPro-Italic", 38), fill=SOLUK)
     f, sat = sigdir(d, ad, "Fraunces-SemiBold", 92, 52, W - 140, 2)
     y = 246
@@ -183,10 +186,44 @@ def gorseller():
 
 def site_haritasi():
     bugun = datetime.date.today().isoformat()
-    u = ["/", "/kvkk.html", "/testler/"] + [f"/test/{t['slug']}/" for t in TESTLER if t.get("sorular") or t["tur"] == "karne"]
+    u = ["/", "/kvkk.html", "/testler/", "/kimya/", "/grafik/"] + [f"/test/{t['slug']}/" for t in TESTLER if t.get("sorular") or t["tur"] == "karne"]
     yaz("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
         "".join(f"<url><loc>{SITE}{x}</loc><lastmod>{bugun}</lastmod></url>" for x in u) + "</urlset>\n")
 
+# ---------- özel sayfalar: Aşkın Kimyası, Aşkının Grafiği ----------
+def oku(ad):
+    with open(os.path.join(KOK, "_kaynak", ad), encoding="utf-8") as f: return f.read()
+
+def ozel_sayfalar():
+    yaz("kimya/index.html", sayfa("Aşkın Kimyası · Aşkonomi", "Âşık olunca beyninde, kalbinde ve vücudunda neler oluyor? Etkileşimli beden haritası, evre testi ve 6 mit, kaynaklarıyla.",
+                                  "/kimya/", "/og/kimya.jpg", oku("govde_kimya.html").replace("{SURUM}", SURUM), "kimya", aktif="kimya"))
+    yaz("grafik/index.html", sayfa("Aşkının Grafiği · Aşkonomi", "İlişkinin değer–zaman eğrisini çiz, Aşkonomi sana piyasa yorumunu versin: yükseliş, balon, toparlanma ya da yatay seyir.",
+                                   "/grafik/", "/og/grafik.jpg", oku("govde_grafik.html").replace("{SURUM}", SURUM), "grafik", aktif="grafik"))
+
+def og_kimya():
+    im, d = taban("ÖZEL BÖLÜM")
+    d.text((64, 190), "Aşkın", font=F("Fraunces-SemiBold", 110), fill=MUREKKEP)
+    d.text((64, 310), "kimyası.", font=F("Fraunces-Italic", 110), fill=BORDO)
+    d.text((64, 450), "Âşık olunca beyinde, kalpte ve vücutta neler oluyor?", font=F("CrimsonPro-Italic", 36), fill=SOLUK)
+    d.text((64, H - 78), "askonomi.com/kimya", font=F("Fraunces-Medium", 24), fill=BORDO)
+    return im
+
+def og_grafik():
+    im, d = taban("ETKİLEŞİMLİ ARAÇ")
+    d.text((64, 190), "Aşkının", font=F("Fraunces-SemiBold", 100), fill=MUREKKEP)
+    d.text((64, 300), "grafiği.", font=F("Fraunces-Italic", 100), fill=BORDO)
+    d.text((64, 440), "Eğrini çiz, piyasa yorumunu al.", font=F("CrimsonPro-Italic", 36), fill=SOLUK)
+    # kapaktaki gibi küçük değer–zaman eğrisi
+    x0, y0, x1, y1 = 700, 170, 1130, 480
+    d.line([(x0, y0), (x0, y1), (x1, y1)], fill=CIZGI, width=3)
+    pts = [(0, .15), (.12, .13), (.24, .3), (.36, .26), (.48, .38), (.6, .32), (.7, .36), (.8, .5), (.88, .62), (1, .95)]
+    d.line([(x0 + 15 + p[0] * (x1 - x0 - 30), y1 - 15 - p[1] * (y1 - y0 - 30)) for p in pts], fill=BORDO, width=6, joint="curve")
+    d.text((x0 + 10, y0 - 34), "değer", font=F("CrimsonPro-Italic", 24), fill=SOLUK)
+    d.text((x1 - 70, y1 + 8), "zaman", font=F("CrimsonPro-Italic", 24), fill=SOLUK)
+    d.text((64, H - 78), "askonomi.com/grafik", font=F("Fraunces-Medium", 24), fill=BORDO)
+    return im
+
 if __name__ == "__main__":
-    js_veri(); merkez_sayfa(); test_sayfalari(); gorseller(); site_haritasi()
+    js_veri(); merkez_sayfa(); test_sayfalari(); ozel_sayfalar(); gorseller(); site_haritasi()
+    kaydet_jpg(og_kimya(), "og/kimya.jpg"); kaydet_jpg(og_grafik(), "og/grafik.jpg")
     print("tamam:", len(TESTLER), "test;", sum(len(sonuclar(t)) for t in TESTLER), "sonuç sayfası")

@@ -59,3 +59,52 @@ Bu yüzden bu dosyadaki il verilerinin TAMAMI **ikincil kaynaktan** alındı. De
   - cx, cy değerleri il centroidi. Centroid ilin dışında kalırsa iç nokta (representative point) kullanıldı.
 - **Boyut:** 58.088 bayt (yaklaşık 57 KB).
 - **Kontrol:** Harita PNG'ye render edilip gözle kontrol edildi.
+
+## dogum_verisi.csv
+
+- **Yıl:** 2025. Kaynak, TÜİK "Doğum İstatistikleri, 2025" bülteni (21.05.2026). Bülten bağlantısı: https://veriportali.tuik.gov.tr/tr/press/58018
+- **Sütunlar:** plaka, il, tdh (toplam doğurganlık hızı, kadın başına çocuk), kaba_dogum (kaba doğum hızı, ‰). Ondalık ayırıcı nokta.
+- **Durum:** İki sütun da 81 il için dolu. Eksik il yok.
+
+### Birincil kaynak: erişilemedi
+- veriportali.tuik.gov.tr ve data.tuik.gov.tr adreslerine erişilemedi. WebFetch izni alınamadı, shell proxy'si de bağlantıyı reddetti (403).
+- Bu yüzden il değerleri TÜİK tablosundan doğrudan alınmadı.
+
+### İkincil kaynak (81 ilin tamamı için)
+- **Kaynak:** nufusune.com il sayfaları, `https://www.nufusune.com/<il>-nufusu` biçiminde. Örnekler: https://www.nufusune.com/sanliurfa-nufusu, https://www.nufusune.com/bartin-nufusu, https://www.nufusune.com/canakkale-nufusu
+- Her sayfa değerleri "TÜİK Doğum, Evlenme ve Boşanma İstatistikleri" kaynağıyla, 2025 yılı için veriyor. Nüfus tabanı ADNKS 2025.
+- 81 sayfanın her biri tek tek okundu. Her sayfada yıl "2025" görünüyordu.
+- Sitenin kendi notu: resmi kullanım öncesinde değerlerin TÜİK'ten teyit edilmesi gerekiyor.
+
+### Türkiye geneli (2025)
+- TDH 1,42 (2024: 1,49). Kaba doğum hızı ‰10,4. Canlı doğum 895.374.
+- Kaynaklar:
+  - https://www.ekonomigazetesi.com/ekonomi/dogurganlik-hizi-2025te-142-79771
+  - https://www.alomaliye.com/2026/05/21/dogurganlik-hizi-2025te-1-42ye-geriledi/
+  - https://www.haberturk.com/dogurganlik-hizi-tarihi-dusuk-seviyede-3886214-ekonomi
+
+### Kontroller
+1. **TDH uç iller:** 10 il, bağımsız haber kaynaklarıyla karşılaştırıldı ve hepsi birebir tuttu.
+   - En yüksekler: Şanlıurfa 3,15; Şırnak 2,53; Mardin 2,23; Diyarbakır 2,14; Siirt 2,11.
+   - En düşükler: Bartın 1,09; İzmir 1,10; Ankara, Eskişehir ve Zonguldak 1,11.
+   - Karşılaştırma kaynakları:
+     - https://www.ahaber.com.tr/viral/galeri/liste/2025-tuik-dogum-istatistikleri-dogurganlik-hizi-en-yuksek-ve-en-dusuk-iller-hangileri
+     - https://www.haberler.com/guncel/yeni-veriler-aciklandi-iste-cumhurbaskani-19867436-haberi/
+     - https://t24.com.tr/gundem/turkiyenin-nufus-yapisi-degisiyor-dogum-oranlari-gerilemeye-devam-ediyor,1323548
+     - https://www.habergalerisi.com/haber-dogum-istatistikleri-2025-140316.html
+   - CSV'deki sıralamada da ilk 5 ve son 5 il haberlerdekiyle aynı.
+2. **TDH dağılımı:** Bültende verilen sayımlar CSV ile birebir tutuyor.
+   - TDH < 2,10 olan il: 76.
+   - TDH < 1,50 olan il: 59.
+   - TDH ≥ 3 olan il: 1 (Şanlıurfa).
+   - Bu sayımların kaynakları: alomaliye ve habergalerisi (yukarıda).
+3. **Kaba doğum hızı:** İl düzeyinde bağımsız doğrulama yalnızca 1 ilde yapılabildi.
+   - Sinop ‰7,2 (TDH 1,25). Kaynak "Türkiye'nin en düşük 4'üncü ili" diyor. CSV'de Sinop ‰7,2 ile Edirne'yle birlikte 4. sırada; altında Zonguldak 6,6, Bartın 6,8 ve Giresun 6,9 var. Kaynak: https://www.kastamonugundemgazetesi.com/sinop-kaba-dogum-hizinda-turkiye-nin-en-dusuk-4-uncu-ili-oldu/116953
+   - Ulusal haberlerde il bazında kaba doğum hızı bulunamadı.
+   - En yüksek il CSV'de de Şanlıurfa (‰23,8). Bu değer TDH sıralamasıyla tutarlı.
+   - **Not:** kaba_dogum sütununun bağımsız teyidi, tdh sütununa göre daha zayıf.
+4. **İl adları:** CSV'deki il adları il_verisi.csv ile birebir eşleşiyor (script ile kontrol edildi). 81 il var, tekrar eden yok.
+
+### Eksikler ve yapılacaklar
+- Eksik il yok.
+- Yayından önce önerilen: TÜİK bülten tablosu "İllere göre toplam doğurganlık hızı ve kaba doğum hızı, 2025" indirilip iki sütunun birebir karşılaştırılması. Özellikle kaba_dogum sütunu için.

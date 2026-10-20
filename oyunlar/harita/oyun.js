@@ -30,7 +30,7 @@
     '<div class="hr-ipucu" id="hrIpucu" hidden></div></div>' +
     '<div class="hr-lejant" id="hrLejant"></div>' +
     '<div class="hr-alt"><div class="hr-kart" id="hrKart" aria-live="polite"></div><div class="hr-uclar" id="hrUclar"></div></div>' +
-    '<p class="oy-not hr-kaynak">Veri: TÜİK, Evlenme ve Boşanma İstatistikleri 2025 (24 Şubat 2026)' + (H.dogumKaynak ? '; ' + H.dogumKaynak : '') + '. Kaba hız, il nüfusunun bin kişisi başına düşen evlenme ya da boşanma sayısıdır. Harita sınırları: alpers/Turkey-Maps-GeoJSON, Apache 2.0 lisansı.</p>' +
+    '<p class="oy-not hr-kaynak">Veri: TÜİK, Evlenme ve Boşanma İstatistikleri 2025 (24 Şubat 2026)' + (H.dogumKaynak ? '; TÜİK, ' + H.dogumKaynak : '') + '. Kaba hız, il nüfusunun bin kişisi başına düşen evlenme ya da boşanma sayısıdır. Harita sınırları: alpers/Turkey-Maps-GeoJSON, Apache 2.0 lisansı.</p>' +
     '<div id="hrSon"></div>';
   var g = document.getElementById('hrIller');
   H.iller.forEach(function (i) {
@@ -136,7 +136,7 @@
   }
   ara.addEventListener('change', bul);
   ara.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); bul(); } });
-  document.getElementById('hrSon').outerHTML = '<div class="hr-son">' + O.abone() + '<p class="not">Kitapta: Bölüm 22 · Boşanmanın Ekonomisi ve Bölüm 29 · Modern Evlilik.</p></div>';
+  document.getElementById('hrSon').outerHTML = '<div class="hr-son">' + O.abone() + '<p class="not">Kitapta: Bölüm 17 · Çocukların Ekonomisi, Bölüm 22 · Boşanmanın Ekonomisi ve Bölüm 29 · Modern Evlilik.</p></div>';
   boya();
   var q = new URLSearchParams(location.search).get('il');
   if (q) sec(H.iller.filter(function (i) { return i.p === +q; })[0]);

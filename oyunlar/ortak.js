@@ -44,7 +44,7 @@
     { slug: 'eslesme', ad: 'Eşleşme köyü', kisa: 'Sekiz kişilik bir köyü eşleştir. Kimin teklif ettiği, kimin kiminle kalacağını nasıl değiştiriyor?', sure: '4 dk', bolum: 'Bölüm 05 · Aşk Piyasası', cizim: 'eslesme' },
     { slug: 'beklenti', ad: 'Beklenti bütçesi', kisa: 'Önce hayalindeki partnerden ne beklediğini işaretle, sonra bir insanın gerçek kapasitesiyle karşılaştır.', sure: '2 dk', bolum: 'Bölüm 28 · Beklenti Enflasyonu', cizim: 'beklenti' },
     { slug: 'kaydirma', ad: 'Kaydırma simülatörü', kisa: 'Otuz profil kaydır. Sonunda dikkatinin nasıl eridiğini kendi verinle gör.', sure: '3 dk', bolum: 'Bölüm 30 · Tinder’dan Önce ve Sonra', cizim: 'kaydirma' },
-    { slug: 'harita', ad: 'Türkiye’nin aşk haritası', kisa: 'Hangi ilde insanlar daha erken evleniyor, nerede boşanma daha sık? İlini bul.', sure: '2 dk', bolum: 'Bölüm 22 ve 29', cizim: 'harita' },
+    { slug: 'harita', ad: 'Türkiye’nin aşk haritası', kisa: 'Hangi ilde evlilik daha sık, nerede boşanma, nerede çocuk sayısı daha yüksek? İlini bul.', sure: '2 dk', bolum: 'Bölüm 17, 22 ve 29', cizim: 'harita' },
     { slug: '../grafik', ad: 'Aşkının grafiği', kisa: 'Kapaktaki değer–zaman eğrisini kendi ilişkin için çiz, piyasa yorumunu al.', sure: '1 dk', bolum: 'Bölüm 24–28', cizim: 'grafik' }
   ];
 

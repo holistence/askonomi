@@ -265,3 +265,7 @@
 .es-sahne.dar .es-yaka{font-size:24px}
 .es-sahne.dar .es-bas{font-size:24px}
 .es-sahne.dar .es-tur{font-size:22px}
+.hr-ikonlar{display:flex;gap:1px;align-items:center}
+.hr-ikonlar{min-width:0}.hr-cocuk{flex:1 1 0;min-width:0;max-width:22px;height:auto;aspect-ratio:1}
+.hr-c{grid-template-columns:78px minmax(0,1fr) 62px 44px}
+@media(max-width:420px){.hr-c{grid-template-columns:58px minmax(0,1fr) 48px 38px;gap:6px;font-size:15px}.hr-c b{font-size:16px}.hr-c small{font-size:12px}}

@@ -8,7 +8,8 @@
   var tohum = 20261021;
   function rnd() { tohum = (tohum * 1664525 + 1013904223) % 4294967296; return tohum / 4294967296; }
   function sec(a) { return a[Math.floor(rnd() * a.length)]; }
-  var ADLAR = ['Ada', 'Deniz', 'Ege', 'Umut', 'Yağmur', 'Derin', 'Evren', 'Mert', 'Selin', 'Kerem', 'Zeynep', 'Can', 'Elif', 'Arda', 'İpek', 'Bora', 'Defne', 'Emre', 'Ece', 'Kaan', 'Nil', 'Ozan', 'Su', 'Tuna', 'Asya', 'Efe', 'Lal', 'Onur', 'Duru', 'Sarp'];
+  var KADIN = ['Selin', 'Zeynep', 'Elif', 'İpek', 'Defne', 'Ece', 'Nil', 'Asya', 'Lal', 'Duru', 'Melis', 'Ceren', 'Damla', 'Gizem', 'Pelin', 'Buse', 'Derya', 'Eylül', 'Ezgi', 'Irmak', 'Naz', 'Yasemin', 'Beren', 'Öykü', 'Aslı', 'Burcu', 'Tuğçe', 'Sinem', 'Ayça', 'Gamze'];
+  var ERKEK = ['Kerem', 'Mert', 'Can', 'Arda', 'Bora', 'Emre', 'Kaan', 'Ozan', 'Tuna', 'Efe', 'Onur', 'Sarp', 'Barış', 'Cem', 'Eren', 'Furkan', 'Gökhan', 'Hakan', 'İlker', 'Kerim', 'Levent', 'Murat', 'Oğuz', 'Serkan', 'Tolga', 'Volkan', 'Yiğit', 'Alp', 'Berk', 'Doruk'];
   var MESLEK = ['mimar', 'hemşire', 'yazılımcı', 'öğretmen', 'aşçı', 'grafiker', 'avukat', 'fizyoterapist', 'müzisyen', 'veteriner', 'mühendis', 'kütüphaneci', 'pilot', 'eczacı', 'fotoğrafçı', 'akademisyen'];
   var SEHIR = ['Çanakkale', 'İzmir', 'İstanbul', 'Ankara', 'Eskişehir', 'Bursa', 'Antalya', 'Trabzon', 'Muğla', 'Edirne'];
   var ILGI = ['kamp', 'satranç', 'sabah koşusu', 'eski filmler', 'fermente yiyecekler', 'kuş gözlemi', 'seramik', 'tango', 'polisiye', 'dalış', 'bulmaca', 'bisiklet', 'jazz', 'bahçe', 'yoga', 'bilim kurgu', 'tarih', 'stand-up', 'fotoğraf', 'dağcılık'];
@@ -17,11 +18,18 @@
   var SAC = ['#1e1612', '#3a2618', '#5b3a22', '#8a5a33', '#b07a42', '#d7b07a', '#7a7672', '#2b2a33'];
   var ZEMIN = [['#f6d9c9', '#e8a990'], ['#d6e7e3', '#9cc5bf'], ['#f1e2b8', '#d9b968'], ['#e3d8ef', '#b5a3d1'], ['#dfe8d2', '#a9c48c'], ['#f4d6dc', '#d996a4'], ['#d7e1ee', '#93aecb']];
   var GIYSI = ['#B3263A', '#1E6B70', '#C99A2E', '#3d3550', '#5f7a4a', '#c46a3c', '#2f4f7a', '#8a3b5e'];
-  var profiller = [];
-  for (var i = 0; i < N; i++) {
-    var ilg = []; while (ilg.length < 3) { var x = sec(ILGI); if (ilg.indexOf(x) < 0) ilg.push(x); }
-    profiller.push({ ad: ADLAR[i], yas: 24 + Math.floor(rnd() * 15), meslek: sec(MESLEK), sehir: sec(SEHIR), ilgi: ilg, cumle: sec(CUMLE),
-      ten: sec(TEN), sac: sec(SAC), zemin: sec(ZEMIN), giysi: sec(GIYSI), sacTip: Math.floor(rnd() * 5), gozluk: rnd() < .22, sakal: rnd() < .2, kupe: rnd() < .25 });
+  var profiller = [], cins = null;
+  function uret(c) {
+    tohum = 20261021; profiller = [];
+    for (var i = 0; i < N; i++) {
+      var k = c === 'kadin' ? 'e' : c === 'erkek' ? 'k' : (i % 2 ? 'e' : 'k');
+      var ilg = []; while (ilg.length < 3) { var x = sec(ILGI); if (ilg.indexOf(x) < 0) ilg.push(x); }
+      var ad = k === 'k' ? KADIN[i] : ERKEK[i];
+      profiller.push({ ad: ad, yas: 24 + Math.floor(rnd() * 15), meslek: sec(MESLEK), sehir: sec(SEHIR), ilgi: ilg, cumle: sec(CUMLE),
+        ten: sec(TEN), sac: sec(SAC), zemin: sec(ZEMIN), giysi: sec(GIYSI),
+        sacTip: k === 'k' ? [1, 3, 1, 3, 0][Math.floor(rnd() * 5)] : [0, 2, 4, 4, 0][Math.floor(rnd() * 5)],
+        gozluk: rnd() < .22, sakal: k === 'e' && rnd() < .4, kupe: k === 'k' ? rnd() < .55 : rnd() < .06 });
+    }
   }
   function portre(p, id) {
     var g = 'g' + id, sacArka = ['', '<path d="M112 120c-8 60 8 120 30 150h116c22-30 38-90 30-150z" fill="' + p.sac + '"/>', '', '<path d="M118 110c-14 40-14 90 4 120h156c18-30 18-80 4-120z" fill="' + p.sac + '"/>', ''][p.sacTip];
@@ -47,10 +55,14 @@
 
   // ---------- akış ----------
   var kayit = [], idx = 0, t0 = 0, mesgul = false, ilk = 0;
+  var CO = { oyun: 'kaydirma', aciklama: 'Göreceğin profiller seçimine göre değişir.', kadin: 'Erkek profiller göreceksin', erkek: 'Kadın profiller göreceksin', belirsiz: 'Karışık profiller göreceksin' };
+  var GOR = { kadin: 'erkek', erkek: 'kadın', belirsiz: 'karışık' };
   function bas() {
     kok.innerHTML = '<div class="ky-giris">' + O.C.kaydirma + '<div><p class="oy-buyuk">Otuz profil, senin kararın.</p><p>Her profilde sağa (beğen) ya da sola (geç) kaydır. Ekranda sürükleyebilir, düğmeleri ya da klavyede ← → oklarını kullanabilirsin. Sayfa her karar için ne kadar süre baktığını ölçecek. Bütün profiller kurgusaldır.</p>' +
+      '<p class="oy-not">Sana ' + GOR[cins] + ' profiller gösterilecek. <button class="ky-degis" id="kyCins">Değiştir</button></p>' +
       '<div class="oy-dugmeler"><button class="oy-btn" id="kyBasla">Kaydırmaya başla</button></div></div></div>';
-    document.getElementById('kyBasla').onclick = function () { O.iz('oyun-basladi', { oyun: 'kaydirma' }); idx = 0; kayit = []; deste(); };
+    document.getElementById('kyCins').onclick = function () { O.cinsSor(kok, CO, function (c) { cins = c; uret(c); bas(); }); };
+    document.getElementById('kyBasla').onclick = function () { O.iz('oyun-basladi', { oyun: 'kaydirma' }); idx = 0; kayit = []; deste(); var y = kok.getBoundingClientRect().top + window.scrollY - 66; window.scrollTo({ top: y, behavior: 'smooth' }); };
   }
   function kartHTML(p, i, ust) {
     return '<div class="ky-kart' + (ust ? ' ust' : '') + '" data-i="' + i + '">' + portre(p, i) +
@@ -145,5 +157,5 @@
     document.getElementById('kyYeniden').onclick = function () { idx = 0; kayit = []; deste(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
     kok.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  bas();
+  O.cinsBaslat(kok, CO, function (c) { cins = c; uret(c); bas(); });
 })();

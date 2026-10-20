@@ -145,7 +145,13 @@ ol.bolumler li.sonuk{opacity:.25}
 .nokta:before{content:"";position:absolute;left:4px;top:0;bottom:0;width:1px;background:var(--cizgi)}
 @media (max-width:860px){.test{grid-template-columns:1fr}.nokta{display:none}.kart{padding:24px}}
 
-@media (max-width:860px){nav{display:none}.hero,.felsefe,.yazar,.kunye,.ingilizce{grid-template-columns:1fr}.hero{padding-top:40px}.kapak{order:-1}.kapak img{width:240px}.alintilar{grid-template-columns:1fr 1fr}ol.bolumler{columns:1}.foto{background:linear-gradient(180deg,#e7dccb 0%,#d9c9b2 100%);border-bottom:4px solid var(--bordo);overflow:hidden;display:flex;align-items:flex-end;justify-content:center;aspect-ratio:4/5}
+.menu-btn{display:none;width:44px;height:44px;border:1px solid var(--murekkep);background:none;cursor:pointer;padding:0;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.menu-btn i{display:block;width:20px;height:2px;background:var(--murekkep);transition:transform .25s,opacity .2s}
+.menu-acik .menu-btn i:nth-child(1){transform:translateY(7px) rotate(45deg)}.menu-acik .menu-btn i:nth-child(2){opacity:0}.menu-acik .menu-btn i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media (max-width:860px){.menu-btn{display:flex;margin-left:auto}header .wrap{gap:12px}
+nav{display:none;position:absolute;left:0;right:0;top:64px;flex-direction:column;gap:0;background:var(--zemin);border-bottom:2px solid var(--bordo);box-shadow:0 20px 30px -20px rgba(38,32,40,.4);padding:6px 16px 12px}
+.menu-acik nav{display:flex}
+nav a{padding:14px 2px;border-bottom:1px solid var(--cizgi);font-size:19px;color:var(--murekkep)}nav a:last-child{border-bottom:0}.hero,.felsefe,.yazar,.kunye,.ingilizce{grid-template-columns:1fr}.hero{padding-top:40px}.kapak{order:-1}.kapak img{width:240px}.alintilar{grid-template-columns:1fr 1fr}ol.bolumler{columns:1}.foto{background:linear-gradient(180deg,#e7dccb 0%,#d9c9b2 100%);border-bottom:4px solid var(--bordo);overflow:hidden;display:flex;align-items:flex-end;justify-content:center;aspect-ratio:4/5}
 .foto img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
 .foto{width:200px}.ingilizce img{width:200px}}
 @media (max-width:520px){body{font-size:18px}.alintilar{grid-template-columns:1fr}}
@@ -158,7 +164,8 @@ ol.bolumler li.sonuk{opacity:.25}
 <div class="nokta" aria-hidden="true"><svg viewBox="0 0 24 24" id="noktaKalp"><path d="M12 21C4 15 2 10 5 7c2-2 5-1 7 2 2-3 5-4 7-2 3 3 1 8-7 14z"/></svg></div>
 <header><div class="wrap">
 <a class="logo" href="#"><img src="img/simge.png" alt="" width="36" height="36"><span lang="tr">AŞKONOMİ</span><span lang="en">AŞKONOMİ</span></a>
-<nav><a href="#felsefe"><span lang="tr">Felsefe</span><span lang="en">Idea</span></a><a href="testler/"><span lang="tr">40 Test</span><span lang="en">Quizzes</span></a><a href="kimya/"><span lang="tr">Kimya</span><span lang="en">Chemistry</span></a><a href="oyunlar/"><span lang="tr">Oyunlar</span><span lang="en">Games</span></a><a href="#icindekiler"><span lang="tr">İçindekiler</span><span lang="en">Contents</span></a><a href="#yazar"><span lang="tr">Yazar</span><span lang="en">Author</span></a><a href="#english"><span lang="tr">English Edition</span><span lang="en">Editions</span></a><a href="#takip"><span lang="tr">Takip Et</span><span lang="en">Follow</span></a></nav>
+<nav id="anaNav"><a href="#felsefe"><span lang="tr">Felsefe</span><span lang="en">Idea</span></a><a href="testler/"><span lang="tr">40 Test</span><span lang="en">Quizzes</span></a><a href="kimya/"><span lang="tr">Kimya</span><span lang="en">Chemistry</span></a><a href="oyunlar/"><span lang="tr">Oyunlar</span><span lang="en">Games</span></a><a href="#icindekiler"><span lang="tr">İçindekiler</span><span lang="en">Contents</span></a><a href="#yazar"><span lang="tr">Yazar</span><span lang="en">Author</span></a><a href="#english"><span lang="tr">English Edition</span><span lang="en">Editions</span></a><a href="#takip"><span lang="tr">Takip Et</span><span lang="en">Follow</span></a></nav>
+<button class="menu-btn" id="menuBtn" aria-label="Menü" aria-expanded="false" aria-controls="anaNav"><i></i><i></i><i></i></button>
 <button class="dil" id="dil" aria-label="Dil / Language"><span lang="tr">EN</span><span lang="en">TR</span></button>
 </div></header>
 
@@ -420,4 +427,5 @@ function ml_webform_success_46693605(){iz('abone-formu');var $=window.ml_jQuery|
 </script>
 <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519"></script>
 <script>fetch("https://assets.mailerlite.com/jsonp/2682185/forms/200375210165142584/takel")</script>
+<script>(function(){var h=document.querySelector('header'),b=document.getElementById('menuBtn');if(!b)return;function k(){h.classList.remove('menu-acik');b.setAttribute('aria-expanded','false')}b.onclick=function(){var a=h.classList.toggle('menu-acik');b.setAttribute('aria-expanded',a)};document.querySelectorAll('#anaNav a').forEach(function(a){a.addEventListener('click',k)});document.addEventListener('keydown',function(e){if(e.key==='Escape')k()})})();</script>
 </body></html>

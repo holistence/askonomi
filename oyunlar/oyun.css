@@ -186,7 +186,10 @@
 .ky-giris>svg{width:100%;max-width:300px;height:auto;justify-self:center}
 .ky-ust{display:flex;align-items:center;gap:12px;margin-bottom:12px}.ky-ust .oy-adim{margin:0;min-width:58px}
 .ky-ilerleme{flex:1;height:4px;background:#ece3d6}.ky-ilerleme i{display:block;height:100%;background:var(--bordo);transition:width .3s}
-.ky-deste{position:relative;width:100%;max-width:380px;aspect-ratio:3/4.4;margin:0 auto}
+.ky-deste{position:relative;width:min(100%,380px,calc((100vh - 250px) * .68));min-width:240px;aspect-ratio:3/4.4;margin:0 auto}
+@supports(height:100svh){.ky-deste{width:min(100%,380px,calc((100svh - 250px) * .68))}}
+.ky-deste .ky-bilgi{padding:10px 14px 12px}
+@media(max-height:700px){.ky-bilgi p{display:none}}
 .ky-kart{position:absolute;inset:0;background:#fffaf2;border:1px solid var(--cizgi);box-shadow:0 26px 50px -30px rgba(38,32,40,.55);overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;transition:transform .2s}
 .ky-kart:not(.ust){transform:scale(.95) translateY(12px);filter:brightness(.97)}
 .ky-kart.ust:active{cursor:grabbing}
@@ -251,3 +254,14 @@
 .hr-uclar li button{background:none;border:0;padding:0;font:inherit;font-size:17px;color:var(--murekkep);cursor:pointer;text-decoration:underline;text-decoration-color:var(--cizgi);text-underline-offset:3px}
 .hr-uclar li b{font-family:Fraunces,serif}
 .hr-kaynak{margin-top:16px}
+.es-cins{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.es-cins{grid-template-columns:repeat(3,1fr)}}
+.es-cins button{display:grid;grid-template-columns:48px 1fr;grid-template-rows:auto auto;column-gap:12px;align-items:center;text-align:left;padding:16px;border:1px solid var(--cizgi);background:var(--zemin);cursor:pointer;color:var(--murekkep);font:inherit;transition:border-color .15s,background .15s}
+.es-cins button:hover{border-color:var(--bordo);background:#fff}
+.es-cins svg{grid-row:1/3;width:44px;height:44px;fill:none;stroke:var(--bordo);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.es-cins b{font:600 21px Fraunces,serif}.es-cins span{font-size:16px;color:var(--soluk);font-style:italic}
+.ky-degis{background:none;border:0;padding:0;font:inherit;color:var(--bordo);text-decoration:underline;cursor:pointer}
+.es-sahne.dar .es-ad{font-size:21px}
+.es-sahne.dar .es-yaka{font-size:24px}
+.es-sahne.dar .es-bas{font-size:24px}
+.es-sahne.dar .es-tur{font-size:22px}

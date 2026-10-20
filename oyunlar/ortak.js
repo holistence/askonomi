@@ -106,7 +106,24 @@
     return '<div class="abone-kutu"><p>Bu oyunun arkasındaki fikir kitapta. Aşkonomi çıktığında ilk duymak için:</p><a class="btn abone-git" href="/#takip">E-posta listesine katıl</a></div>';
   }
 
-  window.OYUN = { R: R, C: C, OYUNLAR: OYUNLAR, iz: iz, esc: esc, karistir: karistir, kartHTML: kartHTML, digerleri: digerleri, kart: kart, paylasHTML: paylasHTML, paylasBagla: paylasBagla, abone: abone, SITE: SITE };
+  // ---- cinsiyet: bir kez sorulur, bu tarayıcıda hatırlanır ----
+  var CINS_AN = 'askonomiCinsiyet';
+  function cinsAl() { try { var c = localStorage.getItem(CINS_AN); return /^(kadin|erkek|belirsiz)$/.test(c) ? c : null; } catch (e) { return null; } }
+  function cinsSor(kok, o, cb) {
+    kok.innerHTML = '<p class="oy-adim">Başlamadan önce</p><p class="oy-buyuk">Sen kimsin?</p>' +
+      '<p class="oy-not" style="margin:-6px 0 14px">' + o.aciklama + ' Seçimin yalnızca bu tarayıcıda tutulur, istediğin an değiştirebilirsin.</p>' +
+      '<div class="es-cins">' +
+      '<button data-c="kadin"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="18" r="11"/><path d="M24 29v14M17 37h14"/></svg><b>Kadın</b><span>' + o.kadin + '</span></button>' +
+      '<button data-c="erkek"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="20" cy="28" r="11"/><path d="M28 20l12-12M30 8h10v10"/></svg><b>Erkek</b><span>' + o.erkek + '</span></button>' +
+      '<button data-c="belirsiz"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="11"/><path d="M24 4v9M24 35v9"/></svg><b>Belirtmek istemiyorum</b><span>' + o.belirsiz + '</span></button></div>';
+    kok.querySelectorAll('.es-cins button').forEach(function (b) {
+      b.onclick = function () { var c = b.dataset.c; try { localStorage.setItem(CINS_AN, c); } catch (e) {} iz('cinsiyet-secildi', { c: c, oyun: o.oyun }); cb(c); };
+    });
+  }
+  function cinsBaslat(kok, o, cb) { var c = cinsAl(); if (c) cb(c); else cinsSor(kok, o, cb); }
+  var CINS_AD = { kadin: 'Kadın', erkek: 'Erkek', belirsiz: 'Belirtilmedi' };
+
+  window.OYUN = { R: R, C: C, OYUNLAR: OYUNLAR, iz: iz, esc: esc, karistir: karistir, kartHTML: kartHTML, digerleri: digerleri, kart: kart, paylasHTML: paylasHTML, paylasBagla: paylasBagla, abone: abone, SITE: SITE, cinsAl: cinsAl, cinsSor: cinsSor, cinsBaslat: cinsBaslat, CINS_AD: CINS_AD };
 
   // merkez sayfa
   var liste = document.getElementById('oyListe');

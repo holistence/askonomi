@@ -55,9 +55,10 @@ def sayfa(baslik, aciklama, url, gorsel, govde, sayfa_tur, slug="", aktif=""):
 <script defer src="https://cloud.umami.is/script.js" data-website-id="e2b973cb-62c0-4a6a-b9de-1fd1de7402e8"></script>
 </head>
 <body data-sayfa="{sayfa_tur}" data-slug="{slug}">
-<header><div class="wrap"><a class="logo" href="/"><img src="/img/simge.png" alt="">AŞKONOMİ</a><nav><a href="/testler/"{' class="aktif"' if aktif=='testler' else ''}>Testler</a><a href="/kimya/"{' class="aktif"' if aktif=='kimya' else ''}>Kimya</a><a href="/oyunlar/"{' class="aktif"' if aktif in ('oyunlar','grafik') else ''}>Oyunlar</a><a href="/#takip">Takip et</a></nav></div></header>
+<header><div class="wrap"><a class="logo" href="/"><img src="/img/simge.png" alt="">AŞKONOMİ</a><button class="menu-btn" aria-label="Menü" aria-expanded="false"><i></i><i></i><i></i></button><nav><a href="/" class="sadece-mobil">Ana sayfa</a><a href="/testler/"{' class="aktif"' if aktif=='testler' else ''}>Testler</a><a href="/kimya/"{' class="aktif"' if aktif=='kimya' else ''}>Kimya</a><a href="/oyunlar/"{' class="aktif"' if aktif in ('oyunlar','grafik') else ''}>Oyunlar</a><a href="/#takip">Takip et</a></nav></div></header>
 <main>{govde}</main>
 <footer><div class="wrap"><span>© 2026 Prof. Dr. Mehmet Şahin · askonomi.com</span><span>Testler eğlence ve düşünme amaçlıdır; psikolojik tanı aracı değildir. <a href="/kvkk.html">KVKK</a></span></div></footer>
+<script>(function(){{var h=document.querySelector('header'),b=h&&h.querySelector('.menu-btn');if(!b)return;b.onclick=function(){{var a=h.classList.toggle('menu-acik');b.setAttribute('aria-expanded',a)}};document.addEventListener('keydown',function(e){{if(e.key==='Escape'){{h.classList.remove('menu-acik');b.setAttribute('aria-expanded','false')}}}})}})();</script>
 <script src="/testler/veri.js?v={SURUM}"></script>
 <script src="/testler/motor.js?v={SURUM}"></script>
 </body></html>

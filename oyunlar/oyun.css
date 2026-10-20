@@ -269,3 +269,6 @@
 .hr-ikonlar{min-width:0}.hr-cocuk{flex:1 1 0;min-width:0;max-width:22px;height:auto;aspect-ratio:1}
 .hr-c{grid-template-columns:78px minmax(0,1fr) 62px 44px}
 @media(max-width:420px){.hr-c{grid-template-columns:58px minmax(0,1fr) 48px 38px;gap:6px;font-size:15px}.hr-c b{font-size:16px}.hr-c small{font-size:12px}}
+.es-ilk{font:italic 400 17px "Crimson Pro",serif;fill:var(--bordo)}
+.es-sahne.dar .es-ilk{font-size:19px}
+.es-tablo td:first-of-type{font-weight:600;color:var(--bordo)}

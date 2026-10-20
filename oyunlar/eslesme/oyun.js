@@ -48,11 +48,14 @@
 
   // ---- sahne ----
   var Y = [90, 190, 290, 390], XL = 180, XR = 620, VW = 800, DAR = false;
-  function olcu() { DAR = (kok.clientWidth || 800) < 560; VW = DAR ? 440 : 800; XL = DAR ? 90 : 180; XR = DAR ? 350 : 620; }
+  var VH = 470;
+  function olcu() { DAR = (kok.clientWidth || 800) < 560; VW = DAR ? 440 : 800; XL = DAR ? 90 : 180; XR = DAR ? 350 : 620; Y = DAR ? [80, 196, 312, 428] : [90, 190, 290, 390]; VH = DAR ? 520 : 470; }
+  // kişinin ilk tercihi (Sen için seçtiği, henüz seçmediyse boş)
+  function ilk(ad) { return ad === 'Sen' ? (senSira[0] ? A(senSira[0]) : '') : A(TERCIH[ad][0]); }
   function poz(ad) { var i = SOL.indexOf(ad); return i > -1 ? [XL, Y[i]] : [XR, Y[SAG.indexOf(ad)]]; }
   function sahneSVG() {
     olcu();
-    var h = '<svg id="esSahne" class="es-sahne' + (DAR ? ' dar' : '') + '" viewBox="0 0 ' + VW + ' 470" role="img" aria-label="Köyün iki yakası ve aralarındaki eşleşmeler">' +
+    var h = '<svg id="esSahne" class="es-sahne' + (DAR ? ' dar' : '') + '" viewBox="0 0 ' + VW + ' ' + VH + '" role="img" aria-label="Köyün iki yakası ve aralarındaki eşleşmeler">' +
       '<defs><linearGradient id="esNehir" x1="0" x2="1"><stop offset="0" stop-color="#cfe2df"/><stop offset=".5" stop-color="#b9d6d2"/><stop offset="1" stop-color="#cfe2df"/></linearGradient>' +
       '<marker id="esOk" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs>' +
       '<g transform="translate(' + (VW / 2 - 400) + ' 0)"><path d="M360 0C330 80 420 150 380 235S330 390 380 470H440C390 390 470 320 440 235S380 80 420 0Z" fill="url(#esNehir)" opacity=".75"/>' +
@@ -63,12 +66,13 @@
       var p = poz(ad), sol = SOL.indexOf(ad) > -1, renk = sol ? R.bordo : R.petrol, ben = ad === 'Sen';
       h += '<g class="es-kisi" data-ad="' + ad + '"><circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + (ben ? 32 : 28) + '" fill="' + (ben ? renk : '#fffaf2') + '" stroke="' + renk + '" stroke-width="4"/>' +
         '<text x="' + p[0] + '" y="' + (p[1] + 8) + '" text-anchor="middle" class="es-bas" fill="' + (ben ? '#fff' : renk) + '">' + (ben ? 'Sen' : A(ad).charAt(0)) + '</text>' +
-        (DAR ? '<text x="' + p[0] + '" y="' + (p[1] + 52) + '" text-anchor="middle" class="es-ad">' + (ben ? '' : A(ad)) + '</text>' :
+        (DAR ? '<text x="' + p[0] + '" y="' + (p[1] + 52) + '" text-anchor="middle" class="es-ad">' + (ben ? '' : A(ad)) + '</text>' +
+        '<text x="' + p[0] + '" y="' + (p[1] + (ben ? 54 : 76)) + '" text-anchor="middle" class="es-not es-ilk" data-ilk="' + ad + '">' + (ilk(ad) ? '♥ ' + ilk(ad) : '') + '</text>' :
         '<text x="' + (p[0] + (sol ? -46 : 46)) + '" y="' + (p[1] - 2) + '" text-anchor="' + (sol ? 'end' : 'start') + '" class="es-ad">' + (ben ? '' : A(ad)) + '</text>' +
-        '<text x="' + (p[0] + (sol ? -46 : 46)) + '" y="' + (p[1] + 20) + '" text-anchor="' + (sol ? 'end' : 'start') + '" class="es-not">' + (NOT[ad] || '') + '</text>') +
+        '<text x="' + (p[0] + (sol ? -46 : 46)) + '" y="' + (p[1] + 20) + '" text-anchor="' + (sol ? 'end' : 'start') + '" class="es-not es-ilk" data-ilk="' + ad + '">' + (ilk(ad) ? '♥ ' + ilk(ad) : '') + '</text>') +
         '<text class="es-rozet" x="' + (p[0] + (sol ? 42 : -42)) + '" y="' + (p[1] - 26) + '" text-anchor="middle"></text></g>';
     });
-    return h + '</g><text id="esTur" x="' + VW / 2 + '" y="466" text-anchor="middle" class="es-tur"></text></svg>';
+    return h + '</g><text id="esTur" x="' + VW / 2 + '" y="' + (VH - 4) + '" text-anchor="middle" class="es-tur"></text></svg>';
   }
   function yay(a, b, cls) {
     var p = poz(a), q = poz(b), sol = SOL.indexOf(a) > -1;
@@ -84,16 +88,18 @@
   function bas() {
     senSira = [];
     kok.innerHTML = '<p class="oy-adim">1. adım · Tercihlerini sırala</p>' + sahneSVG() +
+      '<p class="oy-not" style="margin:6px 0 0">♥ işareti, her kişinin karşı yakadaki ilk tercihini gösteriyor. Tam sıralamalar aşağıdaki tabloda.</p>' +
       '<p class="oy-buyuk" style="margin-top:10px">Sağ yakadan kimi ne kadar istiyorsun? En çok istediğinden başlayarak dokun.</p>' +
       '<div class="es-secim" id="esSecim">' + SAG.map(function (ad) { return '<button data-ad="' + ad + '"><b>' + A(ad) + '</b><span>' + NOT[ad] + '</span><i></i></button>'; }).join('') + '</div>' +
       '<div class="oy-dugmeler"><button class="oy-btn" id="esBasla" disabled>Köyü eşleştir</button><button class="oy-btn ikincil" id="esSifirla">Sıfırla</button><button class="oy-btn ikincil" id="esCins">Cinsiyet seçimini değiştir</button></div>' +
-      tercihTablosu(false);
+      tercihTablosu(true);
     kok.querySelectorAll('#esSecim button').forEach(function (b) {
       b.onclick = function () {
         if (senSira.indexOf(b.dataset.ad) > -1) return;
         senSira.push(b.dataset.ad); b.classList.add('secili'); b.querySelector('i').textContent = senSira.length + '.';
         if (senSira.length === 3) { var son = SAG.filter(function (x) { return senSira.indexOf(x) < 0; })[0]; senSira.push(son); var bb = kok.querySelector('#esSecim button[data-ad="' + son + '"]'); bb.classList.add('secili'); bb.querySelector('i').textContent = '4.'; }
         document.getElementById('esBasla').disabled = senSira.length < 4;
+        var tb = kok.querySelector('.es-tablo'); if (tb) tb.outerHTML = tercihTablosu(true);
         rozetler();
       };
     });
@@ -102,10 +108,11 @@
     document.getElementById('esBasla').onclick = function () { O.iz('oyun-basladi', { oyun: 'eslesme' }); calistir('sol'); };
   }
   function rozetler() {
+    var e = document.querySelector('.es-ilk[data-ilk="Sen"]'); if (e) e.textContent = ilk('Sen') ? '♥ ' + ilk('Sen') : '';
     SAG.forEach(function (ad) { var r = document.querySelector('.es-kisi[data-ad="' + ad + '"] .es-rozet'); var i = senSira.indexOf(ad); r.textContent = i > -1 ? (i + 1) + '.' : ''; });
   }
   function tercihTablosu(acik) {
-    var satir = function (ad) { var l = ad === 'Sen' ? (senSira.length === 4 ? senSira : ['?', '?', '?', '?']) : TERCIH[ad]; return '<tr><th class="' + (SOL.indexOf(ad) > -1 ? 'sen-r' : 'o-r') + '">' + A(ad) + '</th>' + l.map(function (x) { return '<td>' + A(x) + '</td>'; }).join('') + '</tr>'; };
+    var satir = function (ad) { var l = ad === 'Sen' ? [0, 1, 2, 3].map(function (k) { return senSira[k] || '?'; }) : TERCIH[ad]; return '<tr><th class="' + (SOL.indexOf(ad) > -1 ? 'sen-r' : 'o-r') + '">' + A(ad) + '</th>' + l.map(function (x) { return '<td>' + A(x) + '</td>'; }).join('') + '</tr>'; };
     return '<details class="es-tablo"' + (acik ? ' open' : '') + '><summary>Herkesin tercih sırası</summary><div class="es-tablo-ic"><table><tr><th></th><th>1.</th><th>2.</th><th>3.</th><th>4.</th></tr>' +
       SOL.map(satir).join('') + SAG.map(satir).join('') + '</table><p class="oy-not">Köydekilerin tercihleri sabit. Senin sıran değiştikçe sonuç da değişebilir.</p></div></details>';
   }

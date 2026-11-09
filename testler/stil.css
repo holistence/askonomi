@@ -15,6 +15,7 @@ header nav a{text-decoration:none;color:var(--soluk)}header nav a:hover,header n
 h1,h2,h3{font-family:Fraunces,serif;font-weight:600;margin:0}
 .btn{display:inline-block;background:var(--murekkep);color:var(--zemin);text-decoration:none;padding:14px 20px;font:500 14px/1 Fraunces,serif;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--murekkep);cursor:pointer}
 .btn:hover{background:var(--bordo);border-color:var(--bordo)}
+.btn.al{background:var(--bordo);color:#fff}.btn.al:hover{background:var(--murekkep);color:var(--zemin)}
 .btn.ikincil{background:none;color:var(--murekkep)}.btn.ikincil:hover{background:var(--murekkep);color:var(--zemin)}
 footer{padding:36px 0 56px;border-top:1px solid var(--cizgi);font-size:15px;color:var(--soluk);margin-top:56px}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}

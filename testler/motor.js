@@ -274,7 +274,7 @@
     f(); setInterval(f, 30000);
   }
   function aboneHTML() {
-    return '<div class="abone-kutu"><p>Yeni testler her Pazartesi ve Perşembe açılıyor. Haber almak ve kitap çıktığında ilk duymak için:</p><a class="btn abone-git" href="/#takip">E-posta listesine katıl</a></div>';
+    return '<div class="abone-kutu"><p>Yeni testler her Pazartesi ve Perşembe açılıyor. Aşkonomi çıktı; kitabın tamamı Kitapyurdu’nda.</p><a class="btn al" target="_blank" rel="noopener" data-umami-event="kitapyurdu-testler" href="https://www.kitapyurdu.com/kitap/askonomi-kalbin-kararlarinin-ekonomisi/774343.html">Kitabı satın al</a> <a class="btn ikincil abone-git" href="/#takip">E-posta listesine katıl</a></div>';
   }
   function altBaglar(yeniden) {
     var oz = testBul(document.body.dataset.slug || '');

@@ -111,7 +111,7 @@
     var k = kok.querySelector('[data-k="kopya"]'); if (k) k.onclick = function () { try { navigator.clipboard.writeText(url); k.textContent = 'Kopyalandı'; } catch (e) { prompt('Bağlantı:', url); } };
   }
   function abone() {
-    return '<div class="abone-kutu"><p>Bu oyunun arkasındaki fikir kitapta. Aşkonomi çıktığında ilk duymak için:</p><a class="btn abone-git" href="/#takip">E-posta listesine katıl</a></div>';
+    return '<div class="abone-kutu"><p>Bu oyunun arkasındaki fikir kitapta. Aşkonomi çıktı; kitabın tamamı Kitapyurdu’nda.</p><a class="btn al" target="_blank" rel="noopener" data-umami-event="kitapyurdu-oyunlar" href="https://www.kitapyurdu.com/kitap/askonomi-kalbin-kararlarinin-ekonomisi/774343.html">Kitabı satın al</a> <a class="btn ikincil abone-git" href="/#takip">E-posta listesine katıl</a></div>';
   }
 
   // ---- cinsiyet: bir kez sorulur, bu tarayıcıda hatırlanır ----

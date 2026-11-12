@@ -141,7 +141,7 @@
       '<div class="hr-cubuklar"><small class="hr-yil-not">' + yil + ' değerleri · dikey çizgi Türkiye</small>' +
       satir('Evlenme ‰', 'ev', i) + satir('Boşanma ‰', 'bos', i) + satir('İlk evlilik, K', 'ilkK', i) + satir('İlk evlilik, E', 'ilkE', i) + cocukSatir(i) + satir('Hane (2025)', 'hane', i) + '</div>' +
       '<p class="hr-oran">' + yil + '’te ' + n(i.nE[yy]) + ' evlilik, ' + n(i.nB[yy]) + ' boşanma. Her 100 evliliğe karşı <b>' + Math.round(i.oran[yy]) + '</b> boşanma.</p>' +
-      '<div class="paylas"><a class="wa" data-k="wa" target="_blank" rel="noopener" href="#">WhatsApp</a><a data-k="x" target="_blank" rel="noopener" href="#">X</a><button data-k="indir">Görseli indir</button><button data-k="kopya">Bağlantıyı kopyala</button></div>';
+      '<div class="paylas"><a class="wa" data-k="wa" target="_blank" rel="noopener" href="#">WhatsApp</a><a data-k="x" target="_blank" rel="noopener" href="#">X</a><a data-k="fb" target="_blank" rel="noopener" href="#">Facebook</a><button class="ig" data-k="ig">Instagram</button><button data-k="indir">Görseli indir</button><button data-k="kopya">Bağlantıyı kopyala</button></div>' + O.IG_NOT + '';
     O.paylasBagla(k, { slug: 'harita', url: O.SITE + '/oyunlar/harita/?il=' + i.p + '&g=' + gos + (g().seri ? '&y=' + yil : ''),
       mesaj: 'Türkiye’nin aşk haritasında ' + i.il + ' (' + (g().seri ? yil : 2025) + '): ' + g().ad.toLowerCase() + cinsAd() + ' ' + fe(deger(i)) + ', Türkiye ' + fe(trDeger()) + '. Senin ilin?',
       kartAyar: { oyun: 'Türkiye’nin aşk haritası', ust: g().ad + cinsAd() + ' · ' + (g().seri ? yil : 2025) + ' · TÜİK', baslik: i.il + ' · ' + fe(deger(i)), alt: 'Türkiye ' + fe(trDeger()), ciz: function (x, X, Yy, W, HH) { kartCiz(x, X, Yy, W, HH, i); } } });

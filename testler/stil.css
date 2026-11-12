@@ -85,6 +85,9 @@ a.tk:hover{transform:translateY(-2px);border-color:var(--bordo);box-shadow:0 14p
 .paylas a,.paylas button{font:500 14px/1 Fraunces,serif;letter-spacing:.06em;padding:11px 13px;border:1px solid var(--murekkep);background:none;color:var(--murekkep);text-decoration:none;cursor:pointer}
 .paylas a:hover,.paylas button:hover{background:var(--murekkep);color:var(--zemin)}
 .paylas .wa{background:#1f7a4d;border-color:#1f7a4d;color:#fff}
+.paylas .ig{background:linear-gradient(45deg,#f09433,#dc2743 50%,#bc1888);border-color:#dc2743;color:#fff}
+.paylas .ig:hover{filter:brightness(1.08);background:linear-gradient(45deg,#f09433,#dc2743 50%,#bc1888);color:#fff}
+.ig-not button{font:inherit;background:none;border:0;border-bottom:1px solid currentColor;padding:0;color:var(--bordo);cursor:pointer}
 .fragman{margin-top:20px;padding:16px 18px;background:var(--murekkep);color:var(--zemin)}
 .fragman .k-ust{font:500 11px/1 Fraunces,serif;letter-spacing:.24em;text-transform:uppercase;color:#cfc4b6;margin-bottom:8px}
 .fragman b{font:600 20px/1.25 Fraunces,serif;display:block}

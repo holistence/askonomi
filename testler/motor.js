@@ -229,10 +229,68 @@
     kok.innerHTML = '<div class="kart sonuc"><span class="bolumno">' + esc(A) + ' & ' + esc(B) + '</span><div class="yuzde">%' + es * 10 + '</div><h2>' + esc(s[1]) + '</h2><p>' + esc(s[2]) + '</p>' + tablo +
       '<div class="paylas"><a class="wa" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(msg) + '">Sonucu partnerine gönder</a><button id="kopya">Bağlantıyı kopyala</button></div>' +
       '<p class="not">' + bolumAd(t.bolum) + ' bu konuyu ele alıyor.</p>' +
-      '<div class="paylas"><a target="_blank" rel="noopener" href="https://x.com/intent/tweet?via=askonomikitap&text=' + encodeURIComponent('Aşkonomi çift testinde uyumumuz %' + es * 10 + ': ' + s[1] + '. Sizinki kaç? ' + SITE + testUrl(t) + '?utm_source=x') + '">X’te paylaş (cevaplar olmadan)</a></div>' +
+      '<div class="paylas"><a target="_blank" rel="noopener" href="https://x.com/intent/tweet?via=askonomikitap&text=' + encodeURIComponent('Aşkonomi çift testinde uyumumuz %' + es * 10 + ': ' + s[1] + '. Sizinki kaç? ' + SITE + testUrl(t) + '?utm_source=x') + '">X’te paylaş (cevaplar olmadan)</a>' + igHTML() + '</div>' + igNotHTML() +
       fragmanHTML(t) + aboneHTML() + altBaglar() + '</div>';
     $('#kopya').onclick = function (e) { kopyala(ikisi, e.target); };
+    igHazirla({ ust: t.ad, etiket: 'Aşkonomi çift testinde uyumumuz', baslik: '%' + es * 10 + ' · ' + s[1], alt: 'Sizinki kaç?' }, SITE + testUrl(t));
     fragmanSayac();
+  }
+
+
+  // ---- Instagram Hikâye görseli (1080×1920, tarayıcıda çizilir) ----
+  var IG = { blob: null, o: null, url: '' };
+  function satirla(c, metin, maxw) {
+    var w = String(metin).split(' '), out = [], cur = '';
+    w.forEach(function (k) { var d = cur ? cur + ' ' + k : k; if (c.measureText(d).width <= maxw) cur = d; else { if (cur) out.push(cur); cur = k; } });
+    if (cur) out.push(cur); return out;
+  }
+  function igCiz(o) {
+    var cv = document.createElement('canvas'); cv.width = 1080; cv.height = 1920;
+    var c = cv.getContext('2d'), M = '#262028', B = '#B3263A', S = '#6b6070';
+    c.fillStyle = '#F2EBE0'; c.fillRect(0, 0, 1080, 1920);
+    c.strokeStyle = '#d8ccbb'; c.lineWidth = 2; c.strokeRect(60, 60, 960, 1800);
+    c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+    function yaz(m, font, renk, y, maxw, lh) { c.font = font; c.fillStyle = renk; lh = lh || Math.round(parseInt(font.match(/(\d+)px/)[1], 10) * 1.15); var ls = satirla(c, m, maxw || 860); ls.forEach(function (l, i) { c.fillText(l, 540, y + i * lh); }); return y + ls.length * lh; }
+    yaz('A Ş K O N O M İ   T E S T İ', '500 34px Fraunces, Georgia, serif', B, 290);
+    var y = yaz(o.ust, 'italic 400 54px Fraunces, Georgia, serif', M, 390, 860, 66);
+    // kalp
+    var hy = Math.max(y + 230, 760), hs = 9.5;
+    c.beginPath();
+    for (var k = 0; k <= 200; k++) { var a = Math.PI * 2 * k / 200, x = 16 * Math.pow(Math.sin(a), 3), yy = 13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a); if (k) c.lineTo(540 + x * hs, hy - yy * hs); else c.moveTo(540 + x * hs, hy - yy * hs); }
+    c.strokeStyle = B; c.lineWidth = 7; c.stroke();
+    y = yaz(o.etiket || 'Sonucum', 'italic 400 46px "Crimson Pro", Georgia, serif', S, hy + 290);
+    y = yaz(o.baslik, '600 88px Fraunces, Georgia, serif', B, y + 50, 860, 98);
+    yaz(o.alt || 'Seninki ne?', '600 56px Fraunces, Georgia, serif', M, Math.max(y + 90, 1440));
+    yaz('askonomi.com', '600 50px Fraunces, Georgia, serif', M, 1600);
+    yaz('Aşkonomi: Kalbin Kararlarının Ekonomisi · Prof. Dr. Mehmet Şahin', '400 30px "Crimson Pro", Georgia, serif', S, 1652);
+    return cv;
+  }
+  function igHazirla(o, url) {
+    IG.blob = null; IG.o = o; IG.url = url + (url.indexOf('?') < 0 ? '?' : '&') + 'utm_source=instagram';
+    var fl = ['500 34px Fraunces', '600 88px Fraunces', 'italic 400 54px Fraunces', 'italic 400 46px "Crimson Pro"', '400 30px "Crimson Pro"'];
+    var bekle = (document.fonts && document.fonts.load) ? Promise.all(fl.map(function (f) { return document.fonts.load(f).catch(function () {}); })) : Promise.resolve();
+    bekle.then(function () { igCiz(o).toBlob(function (b) { IG.blob = b; }, 'image/png'); });
+    var bt = $('#ig'); if (bt) bt.onclick = function () { igPaylas(bt); };
+  }
+  function igPaylas(bt) {
+    var not = $('#ig-not');
+    if (!IG.blob) { bt.textContent = 'Hazırlanıyor…'; setTimeout(function () { bt.textContent = 'Instagram Hikâye'; }, 900); return; }
+    var dosya = null; try { dosya = new File([IG.blob], 'askonomi-sonucum.png', { type: 'image/png' }); } catch (e) {}
+    if (not) not.hidden = false;
+    if (dosya && navigator.canShare && navigator.canShare({ files: [dosya] })) {
+      navigator.share({ files: [dosya] }).catch(function () {});
+    } else {
+      var a = document.createElement('a'); a.href = URL.createObjectURL(IG.blob); a.download = 'askonomi-sonucum.png';
+      document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+      if (not) not.innerHTML = 'Görsel indirildi. Telefonundan Instagram’da <b>Hikâye</b> olarak paylaş, <b>bağlantı etiketiyle</b> askonomi.com’u ekle. <button id="ig-kopya">Bağlantıyı kopyala</button>';
+    }
+    var k = $('#ig-kopya'); if (k) k.onclick = function (e) { kopyala(IG.url, e.target); };
+  }
+  function igHTML() {
+    return '<button class="ig" id="ig">Instagram Hikâye</button>';
+  }
+  function igNotHTML() {
+    return '<p class="not ig-not" id="ig-not" hidden>Instagram’da <b>Hikâye</b>’yi seç, ardından <b>bağlantı etiketiyle</b> testin linkini ekle; takipçilerin tek dokunuşla çözsün. <button id="ig-kopya">Bağlantıyı kopyala</button></p>';
   }
 
   // ---- ortak sonuç ekranı ----
@@ -244,9 +302,10 @@
       '<div class="paylas"><a class="wa" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(msg + ' ' + url + '?utm_source=whatsapp') + '">WhatsApp</a>' +
       '<a target="_blank" rel="noopener" href="https://x.com/intent/tweet?via=askonomikitap&text=' + encodeURIComponent(msg + ' ' + url + '?utm_source=x') + '">X</a>' +
       '<a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url + '?utm_source=facebook') + '">Facebook</a>' +
-      '<button id="kopya">Bağlantıyı kopyala</button></div>' +
+      igHTML() + '<button id="kopya">Bağlantıyı kopyala</button></div>' + igNotHTML() +
       fragmanHTML(t) + aboneHTML() + altBaglar(true) + '</div>';
     $('#kopya').onclick = function (e) { kopyala(url, e.target); };
+    igHazirla({ ust: t.ad, baslik: ad }, url);
     var y = $('#yeniden'); if (y) y.onclick = function () { yeniden(); scrollUst(); };
     fragmanSayac();
     scrollUst();
@@ -278,8 +337,8 @@
   }
   function altBaglar(yeniden) {
     var oz = testBul(document.body.dataset.slug || '');
-    if (oz && oz.ozel) return '<div class="alt-baglar"><a href="/kimya/">← Aşkın Kimyası</a>' + (yeniden ? '<button id="yeniden">Bu testi yeniden çöz</button>' : '') + '<a href="/testler/">40 testlik seri</a><a href="https://instagram.com/askonomikitap" target="_blank" rel="noopener">@askonomikitap</a></div>';
-    return '<div class="alt-baglar"><a href="/testler/">Tüm testler (' + cozulenSayisi() + '/' + (V.testler.length - 1) + ')</a>' + (yeniden ? '<button id="yeniden">Bu testi yeniden çöz</button>' : '') + '<a href="https://instagram.com/askonomikitap" target="_blank" rel="noopener">@askonomikitap</a></div>';
+    if (oz && oz.ozel) return '<div class="alt-baglar"><a href="/kimya/">← Aşkın Kimyası</a>' + (yeniden ? '<button id="yeniden">Bu testi yeniden çöz</button>' : '') + '<a href="/testler/">40 testlik seri</a><a href="https://www.instagram.com/profmehmetsahin/" target="_blank" rel="noopener">@profmehmetsahin</a></div>';
+    return '<div class="alt-baglar"><a href="/testler/">Tüm testler (' + cozulenSayisi() + '/' + (V.testler.length - 1) + ')</a>' + (yeniden ? '<button id="yeniden">Bu testi yeniden çöz</button>' : '') + '<a href="https://www.instagram.com/profmehmetsahin/" target="_blank" rel="noopener">@profmehmetsahin</a></div>';
   }
   function kopyala(s, el) { try { navigator.clipboard.writeText(s); el.textContent = 'Kopyalandı'; } catch (e) { prompt('Bağlantı:', s); } }
   function scrollUst() { var u = $('.test-ust'); if (u && u.getBoundingClientRect().top < -40) window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -305,8 +364,9 @@
     kok.innerHTML = '<div class="kart sonuc"><span class="bolumno">' + liste.length + ' test</span><h2>Aşkonomi Karnen</h2>' +
       '<p>Kitapta seni en çok bekleyen bölümler:</p><ol>' + ilk.map(function (b) { return '<li><b>' + bolumAd(b) + '</b></li>'; }).join('') + '</ol>' +
       '<div class="karne-liste">' + liste.map(function (t) { return '<div><small>' + esc(t.ad) + '</small><b>' + esc(r[t.slug].ad) + '</b></div>'; }).join('') + '</div>' +
-      '<div class="paylas"><a class="wa" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(msg + ' ' + SITE + '/testler/?utm_source=whatsapp') + '">WhatsApp</a><a target="_blank" rel="noopener" href="https://x.com/intent/tweet?via=askonomikitap&text=' + encodeURIComponent(msg + ' ' + SITE + '/testler/?utm_source=x') + '">X</a></div>' +
+      '<div class="paylas"><a class="wa" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(msg + ' ' + SITE + '/testler/?utm_source=whatsapp') + '">WhatsApp</a><a target="_blank" rel="noopener" href="https://x.com/intent/tweet?via=askonomikitap&text=' + encodeURIComponent(msg + ' ' + SITE + '/testler/?utm_source=x') + '">X</a>' + igHTML() + '</div>' + igNotHTML() +
       '<p class="not">Karnen her yeni testle güncellenir. Kayıtlar yalnızca bu tarayıcıda tutulur.</p>' + aboneHTML() + altBaglar() + '</div>';
+    igHazirla({ ust: liste.length + ' test çözdüm', etiket: 'Aşkonomi Karnemde en çok çıkan bölüm', baslik: V.bolum[ilk[0]] || 'Aşkonomi Karnem', alt: 'Seninki ne?' }, SITE + '/testler/');
     iz('karne-goruldu', { test: liste.length });
   }
 

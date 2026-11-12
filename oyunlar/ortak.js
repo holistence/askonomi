@@ -91,8 +91,12 @@
   }
   function paylasHTML(id) {
     return '<div class="paylas"><button data-k="indir">Görseli indir</button>' + (navigator.canShare ? '<button data-k="paylas">Görseli paylaş</button>' : '') +
-      '<a class="wa" data-k="wa" target="_blank" rel="noopener" href="#">WhatsApp</a><a data-k="x" target="_blank" rel="noopener" href="#">X</a><button data-k="kopya">Bağlantıyı kopyala</button></div>';
+      '<a class="wa" data-k="wa" target="_blank" rel="noopener" href="#">WhatsApp</a><a data-k="x" target="_blank" rel="noopener" href="#">X</a><a data-k="fb" target="_blank" rel="noopener" href="#">Facebook</a><button class="ig" data-k="ig">Instagram</button><button data-k="kopya">Bağlantıyı kopyala</button></div>' + IG_NOT;
   }
+  var IG_NOT = '<p class="oy-not ig-not" hidden>Görseli Instagram’da <b>Hikâye</b> ya da gönderi olarak paylaş. Oyunun bağlantısı kopyalandı: Hikâyede <b>bağlantı etiketine</b> yapıştır.</p>';
+  function utm(url, k) { return url + (url.indexOf('?') > -1 ? '&' : '?') + 'utm_source=' + k; }
+  function kopyalaSessiz(s) { try { navigator.clipboard.writeText(s); return true; } catch (e) { return false; } }
+  function igNotGoster(kok) { var n = kok.querySelector('.ig-not') || (kok.nextElementSibling && kok.nextElementSibling.classList && kok.nextElementSibling.classList.contains('ig-not') ? kok.nextElementSibling : null); if (n) n.hidden = false; }
   // o: {kok, slug, mesaj, url, kartAyar}
   function paylasBagla(kok, o) {
     var url = o.url || (SITE + '/oyunlar/' + o.slug + '/');
@@ -107,6 +111,15 @@
         if (navigator.canShare && navigator.canShare({ files: [f] })) navigator.share({ files: [f], text: m }).catch(function () {}); else indir(b);
       });
       iz('oyun-paylas', { oyun: o.slug });
+    };
+    var fb = kok.querySelector('[data-k="fb"]'); if (fb) fb.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(utm(url, 'facebook'));
+    var ig = kok.querySelector('[data-k="ig"]'); if (ig) ig.onclick = function () {
+      kopyalaSessiz(utm(url, 'instagram')); igNotGoster(kok);
+      kart(o.kartAyar, function (b) {
+        var f = new File([b], 'askonomi-' + o.slug + '.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [f] })) navigator.share({ files: [f] }).catch(function () {}); else indir(b);
+      });
+      iz('oyun-paylas', { oyun: o.slug, kanal: 'instagram' });
     };
     var k = kok.querySelector('[data-k="kopya"]'); if (k) k.onclick = function () { try { navigator.clipboard.writeText(url); k.textContent = 'Kopyalandı'; } catch (e) { prompt('Bağlantı:', url); } };
   }
@@ -131,7 +144,36 @@
   function cinsBaslat(kok, o, cb) { var c = cinsAl(); if (c) cb(c); else cinsSor(kok, o, cb); }
   var CINS_AD = { kadin: 'Kadın', erkek: 'Erkek', belirsiz: 'Belirtilmedi' };
 
-  window.OYUN = { R: R, C: C, OYUNLAR: OYUNLAR, iz: iz, esc: esc, karistir: karistir, kartHTML: kartHTML, digerleri: digerleri, kart: kart, paylasHTML: paylasHTML, paylasBagla: paylasBagla, abone: abone, SITE: SITE, cinsAl: cinsAl, cinsSor: cinsSor, cinsBaslat: cinsBaslat, CINS_AD: CINS_AD };
+  window.OYUN = { R: R, C: C, OYUNLAR: OYUNLAR, iz: iz, esc: esc, karistir: karistir, kartHTML: kartHTML, digerleri: digerleri, kart: kart, paylasHTML: paylasHTML, IG_NOT: IG_NOT, paylasBagla: paylasBagla, abone: abone, SITE: SITE, cinsAl: cinsAl, cinsSor: cinsSor, cinsBaslat: cinsBaslat, CINS_AD: CINS_AD };
+
+  // ---- üst paylaşım şeridi: oyunu oynamadan önce de paylaşılabilsin ----
+  function serit() {
+    var slug = document.body.dataset.slug, ust = document.querySelector('.oy-ust'), ad, mesaj, url;
+    if (slug !== 'merkez' && document.body.dataset.sayfa === 'oyun' && slug && ust) {
+      var o = OYUNLAR.filter(function (x) { return x.slug === slug; })[0]; if (!o) return;
+      url = SITE + '/oyunlar/' + slug + '/'; mesaj = 'Aşkonomi oyunu: ' + o.ad + '. ' + o.kisa;
+    } else if (document.getElementById('oyListe')) {
+      ust = document.getElementById('oyListe'); slug = 'merkez';
+      url = SITE + '/oyunlar/'; mesaj = 'Aşkonomi oyunları: güven oyunu, eşleşme köyü, kaydırma simülatörü, Türkiye’nin aşk haritası ve daha fazlası.';
+    } else return;
+    var d = document.createElement('div'); d.className = 'oy-serit';
+    d.innerHTML = '<span>Paylaş:</span>' +
+      '<a class="wa" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(mesaj + ' ' + utm(url, 'whatsapp')) + '">WhatsApp</a>' +
+      '<a target="_blank" rel="noopener" href="https://x.com/intent/tweet?via=askonomikitap&text=' + encodeURIComponent(mesaj + ' ' + utm(url, 'x')) + '">X</a>' +
+      '<a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(utm(url, 'facebook')) + '">Facebook</a>' +
+      '<a target="_blank" rel="noopener" href="https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(utm(url, 'linkedin')) + '">LinkedIn</a>' +
+      '<button class="ig" type="button">Instagram</button><button class="kp" type="button">Bağlantıyı kopyala</button>' +
+      '<p class="oy-not ig-not" hidden>Bağlantı kopyalandı. Instagram’da Hikâye aç, <b>bağlantı etiketine</b> yapıştır.</p>';
+    if (slug === 'merkez') ust.parentNode.insertBefore(d, ust); else ust.appendChild(d);
+    d.querySelector('.ig').onclick = function () {
+      var u = utm(url, 'instagram');
+      if (navigator.share && /Android|iPhone|iPad/i.test(navigator.userAgent)) navigator.share({ title: mesaj, url: u }).catch(function () {});
+      kopyalaSessiz(u); d.querySelector('.ig-not').hidden = false;
+    };
+    d.querySelector('.kp').onclick = function (e) { e.target.textContent = kopyalaSessiz(url) ? 'Kopyalandı' : url; };
+    d.addEventListener('click', function (e) { var a = e.target.closest('a,button'); if (a) iz('oyun-serit-paylas', { oyun: slug, kanal: a.textContent.trim() }); });
+  }
+  serit();
 
   // merkez sayfa
   var liste = document.getElementById('oyListe');

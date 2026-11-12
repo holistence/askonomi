@@ -374,3 +374,12 @@
 .hk-kaynak{max-width:1100px;margin:16px auto 0}
 .hk-perde[hidden]{display:none}
 .hk-perde.kalk{pointer-events:none}
+
+/* paylaşım şeridi + Instagram */
+.oy-serit{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0 4px}
+.oy-serit>span{font:500 12px/1 Fraunces,serif;letter-spacing:.2em;text-transform:uppercase;color:var(--soluk);margin-right:4px}
+.oy-serit a,.oy-serit button{font:500 13px/1 Fraunces,serif;letter-spacing:.05em;padding:9px 11px;border:1px solid var(--cizgi);background:var(--kagit);color:var(--murekkep);text-decoration:none;cursor:pointer}
+.oy-serit a:hover,.oy-serit button:hover{border-color:var(--murekkep)}
+.oy-serit .wa{background:#1f7a4d;border-color:#1f7a4d;color:#fff}
+.oy-serit .ig,.paylas .ig{background:linear-gradient(45deg,#f09433,#dc2743 50%,#bc1888);border-color:#dc2743;color:#fff}
+.oy-serit .ig-not{flex-basis:100%;margin:6px 0 0}

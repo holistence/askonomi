@@ -152,6 +152,9 @@
     if (slug !== 'merkez' && document.body.dataset.sayfa === 'oyun' && slug && ust) {
       var o = OYUNLAR.filter(function (x) { return x.slug === slug; })[0]; if (!o) return;
       url = SITE + '/oyunlar/' + slug + '/'; mesaj = 'Aşkonomi oyunu: ' + o.ad + '. ' + o.kisa;
+    } else if (document.body.dataset.sayfa === 'kimya' && document.querySelector('.ust-alan')) {
+      ust = document.querySelector('.ust-alan'); slug = 'kimya';
+      url = SITE + '/kimya/'; mesaj = 'Âşık olunca beyninde, kalbinde ve vücudunda neler oluyor? Aşkonomi’nin etkileşimli “Aşkın Kimyası” haritası, her bilginin kanıt düzeyiyle:';
     } else if (document.getElementById('oyListe')) {
       ust = document.getElementById('oyListe'); slug = 'merkez';
       url = SITE + '/oyunlar/'; mesaj = 'Aşkonomi oyunları: güven oyunu, eşleşme köyü, kaydırma simülatörü, Türkiye’nin aşk haritası ve daha fazlası.';
@@ -165,13 +168,14 @@
       '<button class="ig" type="button">Instagram</button><button class="kp" type="button">Bağlantıyı kopyala</button>' +
       '<p class="oy-not ig-not" hidden>Bağlantı kopyalandı. Instagram’da Hikâye aç, <b>bağlantı etiketine</b> yapıştır.</p>';
     if (slug === 'merkez') ust.parentNode.insertBefore(d, ust); else ust.appendChild(d);
+    if (slug === 'kimya') d.classList.add('kim-serit');
     d.querySelector('.ig').onclick = function () {
       var u = utm(url, 'instagram');
       if (navigator.share && /Android|iPhone|iPad/i.test(navigator.userAgent)) navigator.share({ title: mesaj, url: u }).catch(function () {});
       kopyalaSessiz(u); d.querySelector('.ig-not').hidden = false;
     };
     d.querySelector('.kp').onclick = function (e) { e.target.textContent = kopyalaSessiz(url) ? 'Kopyalandı' : url; };
-    d.addEventListener('click', function (e) { var a = e.target.closest('a,button'); if (a) iz('oyun-serit-paylas', { oyun: slug, kanal: a.textContent.trim() }); });
+    d.addEventListener('click', function (e) { var a = e.target.closest('a,button'); if (a) iz(slug === 'kimya' ? 'kimya-paylas' : 'oyun-serit-paylas', { oyun: slug, kanal: a.textContent.trim() }); });
   }
   serit();
 

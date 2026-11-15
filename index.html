@@ -222,9 +222,9 @@ nav a{padding:14px 2px;border-bottom:1px solid var(--cizgi);font-size:19px;color
   <h2><span lang="tr">Aşk hayatını hangi ekonomik kavram anlatıyor?</span><span lang="en">Which economic idea explains your love life?</span></h2>
   <p lang="tr">Üç farklı test, her biri altı soru. Her ziyarette başka bir test karşınıza çıkar. Cevaplarınıza göre kitabın hangi bölümünün size seslendiğini görün ve sonucu paylaşın. Doğru ya da yanlış cevap yok; sadece tercihler ve onların bedelleri var.</p>
   <p lang="en">Three different quizzes, six questions each — a different one on each visit. See which chapter of the book speaks to you and share your result. There are no right or wrong answers — only choices and their costs.</p>
-  <p style="margin-top:22px"><a class="btn" href="testler/"><span lang="tr">Yeni: 40 testlik seri →</span><span lang="en">New: the 40-quiz series (Turkish) →</span></a></p>
+  <p style="margin-top:22px"><a class="btn" href="testler/"><span lang="tr">Yeni: 40 testlik seri →</span><span lang="en">New: the 40-quiz series →</span></a></p>
   <p style="font-size:17px;color:var(--soluk);margin:6px 0 0" lang="tr">Dört sezon, her Pazartesi ve Perşembe yeni bir test. Beş test çöz, Aşkonomi Karnen açılsın.</p>
-  <p style="margin-top:18px"><a class="btn ikincil" href="kimya/"><span lang="tr">Aşkın kimyası →</span><span lang="en">The chemistry of love (Turkish) →</span></a> <a class="btn ikincil" href="oyunlar/"><span lang="tr">Oyunlar →</span><span lang="en">Games (Turkish) →</span></a></p>
+  <p style="margin-top:18px"><a class="btn ikincil" href="kimya/"><span lang="tr">Aşkın kimyası →</span><span lang="en">The chemistry of love →</span></a> <a class="btn ikincil" href="oyunlar/"><span lang="tr">Oyunlar →</span><span lang="en">Games →</span></a></p>
  </div>
  <div class="kart" id="kart" aria-live="polite"></div>
 </div></section>
@@ -372,7 +372,7 @@ nav a{padding:14px 2px;border-bottom:1px solid var(--cizgi);font-size:19px;color
  var h=document.documentElement,q=new URLSearchParams(location.search).get('lang'),k;
  try{k=localStorage.getItem('dil')}catch(e){}
  var l=q||k||((navigator.language||'tr').slice(0,2)==='tr'?'tr':'en');
- function set(x){h.setAttribute('data-lang',x);h.lang=x;document.title=x==='tr'?'Aşkonomi — Kalbin Kararlarının Ekonomisi · Prof. Dr. Mehmet Şahin':'The Invisible Hand That Holds Yours — The Economics of the Heart’s Decisions · Prof. Dr. Mehmet Şahin';document.querySelectorAll('[data-ph-tr]').forEach(function(i){i.placeholder=i.getAttribute('data-ph-'+x)});try{localStorage.setItem('dil',x)}catch(e){}}
+ function set(x){h.setAttribute('data-lang',x);h.lang=x;document.title=x==='tr'?'Aşkonomi — Kalbin Kararlarının Ekonomisi · Prof. Dr. Mehmet Şahin':'The Invisible Hand That Holds Yours — The Economics of the Heart’s Decisions · Prof. Dr. Mehmet Şahin';document.querySelectorAll('[data-ph-tr]').forEach(function(i){i.placeholder=i.getAttribute('data-ph-'+x)});try{localStorage.setItem('dil',x)}catch(e){}document.querySelectorAll('a[href]').forEach(function(a){var m=a.getAttribute('href').match(/^(?:\/?en\/)?((?:testler|kimya|oyunlar|grafik|test)\/.*)$/);if(m)a.setAttribute('href',(x==='en'?'en/':'')+m[1])})}
  set(l==='en'?'en':'tr');
  document.getElementById('dil').onclick=function(){set(h.getAttribute('data-lang')==='tr'?'en':'tr')};
  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('goster');io.unobserve(e.target)}})},{threshold:.12});

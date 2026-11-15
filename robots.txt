@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://askonomi.com/sitemap.xml
+Sitemap: https://askonomi.com/en/sitemap.xml

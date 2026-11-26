@@ -73,6 +73,8 @@ LISTE = [
 
 # ---- Yayın takvimi: ilk 6 test hemen, sonra her Pazartesi ve Perşembe ----
 ILK_ACILIS = _dt.date(2026, 10, 6)
+# Takvimden bağımsız erken açılan testler (reklam açılış sayfası olarak kullanılanlar)
+ERKEN_ACILIS = {23: _dt.date(2026, 11, 26)}
 def takvim():
     d = {}
     for no in range(1, 7):
@@ -84,6 +86,7 @@ def takvim():
             d[no] = gun; no += 1
         gun += _dt.timedelta(days=1)
     d[40] = d[39]
+    d.update(ERKEN_ACILIS)
     return d
 
 # ---- İçerikler: kitabın v45 metnine dayanır; kaynak sayfaları _kaynak/raporlar/ ----

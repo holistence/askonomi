@@ -306,7 +306,6 @@
       igHTML() + '<button id="kopya">Bağlantıyı kopyala</button></div>' + igNotHTML() +
       fragmanHTML(t) + altBaglar(true) + '</div>';
     $('#kopya').onclick = function (e) { kopyala(url, e.target); };
-    miniAboneBagla(t);
     igHazirla({ ust: t.ad, baslik: ad }, url);
     var y = $('#yeniden'); if (y) y.onclick = function () { yeniden(); scrollUst(); };
     fragmanSayac();
@@ -336,37 +335,13 @@
   }
   // ---- sonuç ekranı: kitap kutusu + küçük e-posta formu ----
   var KITAP_URL = 'https://www.kitapyurdu.com/kitap/askonomi-kalbin-kararlarinin-ekonomisi/774343.html';
-  var ML_URL = 'https://assets.mailerlite.com/jsonp/2682185/forms/200375210165142584/subscribe';
   function kitapHTML(t) {
     return '<div class="kitap-kutu"><a class="kapak" target="_blank" rel="noopener" href="' + KITAP_URL + '" data-umami-event="kitapyurdu-sonuc-kapak" data-umami-event-test="' + esc(t.slug) + '"><img src="/img/kapak-tr.webp" alt="Aşkonomi: Kalbin Kararlarının Ekonomisi" width="120" height="192" loading="lazy"></a>' +
       '<div><p>Bu sonucun arkasındaki hesap <b>Aşkonomi</b>’de.</p>' +
       '<a class="btn al buyuk" target="_blank" rel="noopener" href="' + KITAP_URL + '" data-umami-event="kitapyurdu-sonuc" data-umami-event-test="' + esc(t.slug) + '">Kitabı incele</a></div></div>';
   }
   function miniAboneHTML() {
-    return '<form class="mini-abone" id="mini-abone" novalidate><p>Yeni testler ve okuma notları e-postana gelsin. Ayda en fazla iki e-posta.</p>' +
-      '<div class="satir"><input type="email" id="ma-eposta" placeholder="E-posta adresin" autocomplete="email" required><button type="submit" class="btn ikincil">Gönder</button></div>' +
-      '<label class="onay"><input type="checkbox" id="ma-onay"> <span><a href="/kvkk.html" target="_blank" rel="noopener">KVKK aydınlatma metnini</a> okudum; Aşkonomi duyurularının e-posta adresime gönderilmesini kabul ediyorum.</span></label>' +
-      '<p class="durum" id="ma-durum" role="status" hidden></p></form>';
-  }
-  function miniAboneBagla(t) {
-    var f = $('#mini-abone'); if (!f) return;
-    var durum = $('#ma-durum');
-    function yaz(m, hata) { durum.hidden = false; durum.textContent = m; durum.className = 'durum' + (hata ? ' hata' : ''); }
-    f.onsubmit = function (e) {
-      e.preventDefault();
-      var ep = $('#ma-eposta').value.trim();
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(ep)) { yaz('Geçerli bir e-posta adresi yaz.', true); return; }
-      if (!$('#ma-onay').checked) { yaz('Devam etmek için onay kutusunu işaretle.', true); return; }
-      var bt = f.querySelector('button'); bt.disabled = true; yaz('Gönderiliyor…');
-      var govde = 'fields%5Bemail%5D=' + encodeURIComponent(ep) + '&ml-submit=1&anticsrf=true&ajax=1';
-      fetch(ML_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: govde })
-        .then(function (r) { return r.json(); })
-        .then(function (d) {
-          if (d && d.success) { iz('abone-formu', { yer: 'sonuc', test: t.slug }); f.innerHTML = '<p class="tamam"><b>Neredeyse tamam.</b> Gelen kutuna bir onay e-postası gönderdik; içindeki bağlantıya tıkla.</p>'; }
-          else { throw new Error('ml'); }
-        })
-        .catch(function () { bt.disabled = false; durum.hidden = false; durum.className = 'durum hata'; durum.innerHTML = 'Gönderilemedi. <a href="/#takip">Buradan kaydolabilirsin.</a>'; iz('abone-formu-hata', { yer: 'sonuc' }); });
-    };
+    return '<p class="mini-abone-bag"><a href="/#takip" data-umami-event="abone-baglanti-sonuc">Yeni testlerden haberdar ol →</a></p>';
   }
   function aboneHTML() {
     return '<div class="abone-kutu"><p>Yeni testler her Pazartesi ve Perşembe açılıyor. Aşkonomi çıktı; kitabın tamamı Kitapyurdu’nda.</p><a class="btn al" target="_blank" rel="noopener" data-umami-event="kitapyurdu-testler" href="https://www.kitapyurdu.com/kitap/askonomi-kalbin-kararlarinin-ekonomisi/774343.html">Kitabı satın al</a> <a class="btn ikincil abone-git" href="/#takip">E-posta listesine katıl</a></div>';

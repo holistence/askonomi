@@ -299,11 +299,12 @@
     var msg = 'Aşkonomi testine göre sonucum: “' + ad + '”. Seninki ne?';
     kok.innerHTML = '<div class="kart sonuc"><span class="bolumno">' + (ek ? esc(ek) : 'Sonucun') + '</span><h2>' + esc(ad) + '</h2><p>' + esc(metin) + '</p>' +
       (bolum ? '<p class="not">Kitapta: ' + bolumAd(bolum) + '</p>' : '') +
+      kitapHTML(t) + miniAboneHTML() +
       '<div class="paylas"><a class="wa" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(msg + ' ' + url + '?utm_source=whatsapp') + '">WhatsApp</a>' +
       '<a target="_blank" rel="noopener" href="https://x.com/intent/tweet?via=askonomikitap&text=' + encodeURIComponent(msg + ' ' + url + '?utm_source=x') + '">X</a>' +
       '<a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url + '?utm_source=facebook') + '">Facebook</a>' +
       igHTML() + '<button id="kopya">Bağlantıyı kopyala</button></div>' + igNotHTML() +
-      fragmanHTML(t) + aboneHTML() + altBaglar(true) + '</div>';
+      fragmanHTML(t) + altBaglar(true) + '</div>';
     $('#kopya').onclick = function (e) { kopyala(url, e.target); };
     igHazirla({ ust: t.ad, baslik: ad }, url);
     var y = $('#yeniden'); if (y) y.onclick = function () { yeniden(); scrollUst(); };
@@ -331,6 +332,16 @@
     var el = $('#fz'); if (!el || !fragmanHedef) return;
     var f = function () { var ms = Math.max(0, fragmanHedef - Date.now()), g = Math.floor(ms / 864e5), s = Math.floor(ms / 36e5) % 24, d = Math.floor(ms / 6e4) % 60; el.textContent = 'Açılmasına ' + (g ? g + ' gün ' : '') + s + ' saat ' + d + ' dakika'; };
     f(); setInterval(f, 30000);
+  }
+  // ---- sonuç ekranı: kitap kutusu + küçük e-posta formu ----
+  var KITAP_URL = 'https://www.kitapyurdu.com/kitap/askonomi-kalbin-kararlarinin-ekonomisi/774343.html';
+  function kitapHTML(t) {
+    return '<div class="kitap-kutu"><a class="kapak" target="_blank" rel="noopener" href="' + KITAP_URL + '" data-umami-event="kitapyurdu-sonuc-kapak" data-umami-event-test="' + esc(t.slug) + '"><img src="/img/kapak-tr.webp" alt="Aşkonomi: Kalbin Kararlarının Ekonomisi" width="120" height="192" loading="lazy"></a>' +
+      '<div><p>Bu sonucun arkasındaki hesap <b>Aşkonomi</b>’de.</p>' +
+      '<a class="btn al buyuk" target="_blank" rel="noopener" href="' + KITAP_URL + '" data-umami-event="kitapyurdu-sonuc" data-umami-event-test="' + esc(t.slug) + '">Kitabı incele</a></div></div>';
+  }
+  function miniAboneHTML() {
+    return '<p class="mini-abone-bag"><a href="/#takip" data-umami-event="abone-baglanti-sonuc">Yeni testlerden haberdar ol →</a></p>';
   }
   function aboneHTML() {
     return '<div class="abone-kutu"><p>Yeni testler her Pazartesi ve Perşembe açılıyor. Aşkonomi çıktı; kitabın tamamı Kitapyurdu’nda.</p><a class="btn al" target="_blank" rel="noopener" data-umami-event="kitapyurdu-testler" href="https://www.kitapyurdu.com/kitap/askonomi-kalbin-kararlarinin-ekonomisi/774343.html">Kitabı satın al</a> <a class="btn ikincil abone-git" href="/#takip">E-posta listesine katıl</a></div>';

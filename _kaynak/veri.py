@@ -29,7 +29,7 @@ BOLUM = {
 # ---- Başlık listesi (onaylı) ----
 LISTE = [
     # no, slug, başlık, tür, bölüm
-    (1, "fiyatin-ne", "Aşk piyasasında değerin ne?", "profil", "05"),
+    (1, "fiyatin-ne", "Aşk piyasasında bedelin ne?", "profil", "05"),
     (2, "kacan-mi-kovalanan-mi", "Kaçan mısın, kovalanan mı?", "profil", "03"),
     (3, "kalp-mi-akil-mi", "Kalbin mi hesap yapıyor, aklın mı?", "senaryo", "02"),
     (4, "ilk-bulusma-sinyali", "İlk buluşmada verdiğin sinyal aslında ne diyor?", "profil", "06"),

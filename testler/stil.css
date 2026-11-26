@@ -217,3 +217,21 @@ input.ad{width:100%;font:inherit;font-size:19px;padding:12px 14px;border:1px sol
 .oy-serit .wa{background:#1f7a4d;border-color:#1f7a4d;color:#fff}
 .oy-serit .ig,.paylas .ig{background:linear-gradient(45deg,#f09433,#dc2743 50%,#bc1888);border-color:#dc2743;color:#fff}
 .oy-serit .ig-not{flex-basis:100%;margin:6px 0 0}
+
+/* sonuç ekranı: kitap kutusu + küçük e-posta formu */
+.kitap-kutu{display:flex;gap:18px;align-items:center;margin:18px 0 0;padding:18px;background:var(--zemin2);border-left:3px solid var(--bordo)}
+.kitap-kutu .kapak{flex:0 0 auto;line-height:0}
+.kitap-kutu img{width:104px;height:auto;display:block;box-shadow:0 6px 18px rgba(38,32,40,.22)}
+.kitap-kutu p{margin:0 0 14px;font-size:21px;line-height:1.3}
+.btn.buyuk{padding:18px 30px;font-size:16px}
+.mini-abone{margin:14px 0 6px;padding:14px 0 0;border-top:1px solid var(--cizgi)}
+.mini-abone p{margin:0 0 8px;font-size:16px;color:var(--soluk)}
+.mini-abone .satir{display:flex;gap:8px}
+.mini-abone input[type=email]{flex:1 1 auto;min-width:0;padding:11px 12px;border:1px solid var(--cizgi);background:var(--kagit);font:inherit;font-size:17px;color:var(--murekkep)}
+.mini-abone .btn{padding:12px 16px}
+.mini-abone .onay{display:flex;gap:8px;align-items:flex-start;margin-top:8px;font-size:14px;line-height:1.35;color:var(--soluk)}
+.mini-abone .onay input{margin-top:3px}
+.mini-abone .durum{margin:8px 0 0;font-size:15px;font-style:italic}
+.mini-abone .durum.hata{color:var(--bordo)}
+.mini-abone .tamam{color:var(--murekkep);font-size:17px}
+@media(max-width:480px){.kitap-kutu{gap:14px;padding:14px}.kitap-kutu img{width:84px}.kitap-kutu p{font-size:19px}.btn.buyuk{padding:16px 22px;font-size:15px}}
